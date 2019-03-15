@@ -8,49 +8,27 @@
 
 import UIKit
 
-class HomeFeedController: BaseListController, UICollectionViewDelegateFlowLayout, MenuControllerDelegate {
+class HomeFeedController: BaseListController {
 
     fileprivate let menuController = MenuController()
     fileprivate let cellId = "cellId"
+    fileprivate let testId = "testId"
     fileprivate let colors = [#colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1), #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)]
-    
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let x = scrollView.contentOffset.x
-        let offset = x / 2
-        menuController.menuBar.transform = CGAffineTransform(translationX: offset, y: 0)
-    }
-
-    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let x = targetContentOffset.pointee.x
-        let item = x / view.frame.width
-        let indexPath = IndexPath(item: Int(item), section: 0)
-        menuController.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
-    }
-    
-    func didTapMenuItem(indexPath: IndexPath) {
-        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        menuController.delegate = self
         setupNavController()
-        view.backgroundColor = .white
+        setupLayout()
+        
+        collectionView.register(HomeCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: testId)
+        collectionView.isPagingEnabled = true
         collectionView.backgroundColor = .blueDark1
         collectionView.allowsSelection = true
+        
+        menuController.delegate = self
         menuController.collectionView.selectItem(at: [0,0], animated: true, scrollPosition: .centeredHorizontally)
-        
-        if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.scrollDirection = .horizontal
-            layout.minimumLineSpacing = 0
-        }
-        
-        setupLayout()
-        collectionView.register(HomeCell.self, forCellWithReuseIdentifier: cellId)
-        
-        //FIXME: got the error when enabled paging
-        collectionView.isPagingEnabled = true
     }
     
     fileprivate func setupNavController() {
@@ -62,6 +40,12 @@ class HomeFeedController: BaseListController, UICollectionViewDelegateFlowLayout
     }
     
     fileprivate func setupLayout() {
+        
+        if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.scrollDirection = .horizontal
+            layout.minimumLineSpacing = 0
+        }
+        
         let menuView = menuController.view!
         menuView.backgroundColor = .yellow
         
@@ -70,15 +54,27 @@ class HomeFeedController: BaseListController, UICollectionViewDelegateFlowLayout
         
         collectionView.anchor(top: menuView.bottomAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0 , left: 0, bottom: 0, right: 0))
     }
+
+}
+
+extension HomeFeedController: UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 2
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeCell
-        cell.backgroundColor = colors[indexPath.item]
-        return cell
+        if indexPath.item == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeCell
+            //        cell.backgroundColor = colors[indexPath.item]
+            return cell
+        } else {
+            if indexPath.item == 1 {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: testId, for: indexPath)
+                return cell
+            }
+        }
+        return UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -86,6 +82,22 @@ class HomeFeedController: BaseListController, UICollectionViewDelegateFlowLayout
     }
 }
 
-
-
+extension HomeFeedController: MenuControllerDelegate {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let x = scrollView.contentOffset.x
+        let offset = x / 2
+        menuController.menuBar.transform = CGAffineTransform(translationX: offset, y: 0)
+    }
+    
+    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let x = targetContentOffset.pointee.x
+        let item = x / view.frame.width
+        let indexPath = IndexPath(item: Int(item), section: 0)
+        menuController.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+    }
+    
+    func didTapMenuItem(indexPath: IndexPath) {
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    }
+}
 

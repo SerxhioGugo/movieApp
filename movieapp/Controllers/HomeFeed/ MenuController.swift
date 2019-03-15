@@ -12,7 +12,7 @@ protocol MenuControllerDelegate {
     func didTapMenuItem(indexPath: IndexPath)
 }
 
-class MenuController: BaseListController, UICollectionViewDelegateFlowLayout {
+class MenuController: BaseListController {
 
     fileprivate let cellId = "cellId"
     fileprivate let entertainmentType = ["Movies", "TV-Shows"]
@@ -24,21 +24,16 @@ class MenuController: BaseListController, UICollectionViewDelegateFlowLayout {
         view.backgroundColor = .black
         return view
     }()
-    
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let x = view.frame.width / 2 * CGFloat(indexPath.item)
-//        
-//        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-//            self.menuBar.transform = CGAffineTransform(translationX: x, y: 0)
-//        })
-        delegate?.didTapMenuItem(indexPath: indexPath)
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.register(MenuCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.backgroundColor = .white
         
+        setupLayout()
+    }
+    
+    fileprivate func setupLayout() {
         if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
             layout.scrollDirection = .horizontal
             layout.minimumLineSpacing = 0
@@ -49,7 +44,14 @@ class MenuController: BaseListController, UICollectionViewDelegateFlowLayout {
         menuBar.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor,trailing: nil, size: .init(width: 0, height: 5))
         menuBar.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1/2).isActive = true
     }
+
+}
+
+extension MenuController: UICollectionViewDelegateFlowLayout {
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.didTapMenuItem(indexPath: indexPath)
+    }
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 2
     }

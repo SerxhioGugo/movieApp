@@ -13,7 +13,8 @@ class HomeFeedController: BaseListController {
     fileprivate let menuController = MenuController()
     fileprivate let cellId = "cellId"
     fileprivate let testId = "testId"
-    fileprivate let colors = [#colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1), #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)]
+    fileprivate let entertainment = ["Upcoming Movies", "Upcoming Tv-Shows"]
+    var movieGroup = [MovieGroup]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,9 +27,48 @@ class HomeFeedController: BaseListController {
         collectionView.isPagingEnabled = true
         collectionView.backgroundColor = .blueDark1
         collectionView.allowsSelection = true
+        collectionView.showsHorizontalScrollIndicator = false
         
         menuController.delegate = self
         menuController.collectionView.selectItem(at: [0,0], animated: true, scrollPosition: .centeredHorizontally)
+        
+        fetchData()
+    }
+    
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//        collectionView.frame = view.safeAreaLayoutGuide.layoutFrame
+//    }
+    
+    func fetchData() {
+        var group1: MovieGroup?
+        var group2: MovieGroup?
+        
+        let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
+        APIClient.shared.fetchUpcomingMovies { (movieGroup, error) in
+            dispatchGroup.leave()
+            group1 = movieGroup
+        }
+        dispatchGroup.enter()
+        APIClient.shared.fetchUpcomingTvShows { (movieGroup, error) in
+            dispatchGroup.leave()
+            group2 = movieGroup
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            print("Tasks are completed")
+            
+            if let group = group1 {
+                self.movieGroup.append(group)
+            }
+            
+            if let group = group2 {
+                self.movieGroup.append(group)
+            }
+            self.collectionView.reloadData()
+        }
     }
     
     fileprivate func setupNavController() {
@@ -47,12 +87,20 @@ class HomeFeedController: BaseListController {
         }
         
         let menuView = menuController.view!
-        menuView.backgroundColor = .yellow
         
         view.addSubview(menuView)
-        menuView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: .init(width: 0, height: 60))
+        menuView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                        leading: view.leadingAnchor,
+                        bottom: nil,
+                        trailing: view.trailingAnchor,
+                        size: .init(width: 0, height: 40))
         
-        collectionView.anchor(top: menuView.bottomAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0 , left: 0, bottom: 0, right: 0))
+        collectionView.anchor(top: menuView.safeAreaLayoutGuide.bottomAnchor,
+                              leading: view.leadingAnchor,
+                              bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                              trailing: view.trailingAnchor,
+                              padding: .init(top: 0 , left: 0, bottom: 0, right: 0))
+        
     }
 
 }
@@ -60,21 +108,20 @@ class HomeFeedController: BaseListController {
 extension HomeFeedController: UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return movieGroup.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.item == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeCell
-            //        cell.backgroundColor = colors[indexPath.item]
-            return cell
-        } else {
-            if indexPath.item == 1 {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: testId, for: indexPath)
-                return cell
-            }
-        }
-        return UICollectionViewCell()
+        
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeCell
+        
+            cell.categoryTypeLabel.text = entertainment[indexPath.item]
+            let groups = movieGroup[indexPath.item]
+            cell.movieController.movieGroup = groups
+            cell.movieController.collectionView.reloadData()
+        return cell
+      
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

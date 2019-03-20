@@ -15,7 +15,7 @@ protocol MenuControllerDelegate {
 class MenuController: BaseListController {
 
     fileprivate let cellId = "cellId"
-    fileprivate let entertainmentType = ["Movies", "TV-Shows"]
+    fileprivate let entertainmentType = ["🍿 Movies", "📺 TV-Shows"]
     
     var delegate: MenuControllerDelegate?
     
@@ -28,9 +28,13 @@ class MenuController: BaseListController {
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.register(MenuCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .clear
         
         setupLayout()
+    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collectionView.frame = view.safeAreaLayoutGuide.layoutFrame
     }
     
     fileprivate func setupLayout() {
@@ -41,10 +45,9 @@ class MenuController: BaseListController {
         }
         
         view.addSubview(menuBar)
-        menuBar.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor,trailing: nil, size: .init(width: 0, height: 5))
+        menuBar.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor,trailing: nil, size: .init(width: 0, height: 2))
         menuBar.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1/2).isActive = true
     }
-
 }
 
 extension MenuController: UICollectionViewDelegateFlowLayout {

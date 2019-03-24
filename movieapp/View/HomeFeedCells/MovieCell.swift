@@ -19,18 +19,6 @@ class MovieCell: UICollectionViewCell {
         return image
     }()
     
-//    var dataSource: Any? {
-//        didSet {
-//            guard
-//                let result = dataSource as? MovieGroup,
-//                let res = result.results,
-//                let poster = res.pos
-//                let posterURL = URL(string: "https://image.tmdb.org/t/p/w300\(poster)")
-//                else { return }
-//            posterImageView.sd_setImage(with: posterURL)
-//        }
-//    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(posterImageView)

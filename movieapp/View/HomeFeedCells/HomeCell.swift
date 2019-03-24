@@ -7,41 +7,37 @@
 //
 
 import UIKit
+import SDWebImage
 
 class HomeCell: UICollectionViewCell {
     
-    let movieController = MovieController()
+    var imageDataSource: Any? {
+        didSet {
+            guard
+                let result = imageDataSource as? MovieResults,
+                let image = result.posterPath,
+                let imageUrl = URL(string: "https://image.tmdb.org/t/p/w300\(image)")
+                else { return }
+            posterImageView.sd_setImage(with: imageUrl)
+        }
+    }
     
-    let categoryTypeLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Upcoming"
-        label.font = .boldSystemFont(ofSize: 25)
-        label.backgroundColor = .clear
-        label.textColor = .sunnyOrange
-        return label
+    let posterImageView : UIImageView = {
+       let image = UIImageView()
+        image.contentMode = .scaleAspectFill
+        image.layer.masksToBounds = true
+        image.layer.cornerRadius = 6
+        return image
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        addSubview(categoryTypeLabel)
-        categoryTypeLabel.anchor(top: topAnchor,
-                                 leading: leadingAnchor,
-                                 bottom: nil,
-                                 trailing: trailingAnchor,
-                                 padding: .init(top: 50, left: 10, bottom: 0, right: 0),
-                                 size: .init(width: 0, height: 50))
-        
-        addSubview(movieController.view)
-        movieController.view.anchor(top: categoryTypeLabel.bottomAnchor,
-                                    leading: leadingAnchor,
-                                    bottom: bottomAnchor,
-                                    trailing: trailingAnchor)
-        
-        movieController.view.backgroundColor = .clear
+        addSubview(posterImageView)
+        posterImageView.anchor(top: topAnchor,
+                               leading: leadingAnchor,
+                               bottom: bottomAnchor,
+                               trailing: trailingAnchor)
     }
-    
-    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

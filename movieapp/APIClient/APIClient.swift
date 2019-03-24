@@ -12,7 +12,7 @@ class APIClient {
     static let shared = APIClient()
     
     func fetchUpcomingTvShows(completion: @escaping (MovieGroup?, Error?) -> Void) {
-        let urlString = "https://api.themoviedb.org/3/tv/popular?api_key=acb5063b86a8efb1ba814b6ad605f578"
+        let urlString = "https://api.themoviedb.org/3/movie/now_playing?api_key=acb5063b86a8efb1ba814b6ad605f578"
         fetchGenericJSONData(urlString: urlString, completion: completion)
     }
     

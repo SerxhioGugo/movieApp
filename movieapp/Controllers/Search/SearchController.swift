@@ -59,20 +59,6 @@ class SearchController: BaseListController, UISearchBarDelegate {
         
     }
     
-    fileprivate func fetchMovies() {
-        guard let url = Service.requests(.query(searchTerm: "Jack")) else { return }
-        Service.fetchJSON(url: url) { (request: Search?, error) in
-            if let error = error {
-                print("Error fetching data: ", error)
-            }
-            guard let request = request?.results else { return }
-            self.searchResult = request
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-        }
-    }
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         timer?.invalidate()
         guard let text = searchBar.text else { return }
@@ -124,7 +110,7 @@ extension SearchController: UICollectionViewDelegateFlowLayout {
 
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         cell.alpha = 0
-        UIView.animate(withDuration: 0.75) {
+        UIView.animate(withDuration: 0.50) {
             cell.alpha = 1.0
         }
     }

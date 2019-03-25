@@ -20,7 +20,7 @@ class MainTabBarController: UITabBarController {
     
     fileprivate func setupTabBar() {
         let homeFeedController = createNavController(vc: HomeFeedController(),
-                                                     title: "Home Feed",
+                                                     title: "Now Playing",
                                                      selectedImage: #imageLiteral(resourceName: "movieSelected"),
                                                      unselectedImage: #imageLiteral(resourceName: "movie"))
         

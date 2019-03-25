@@ -21,6 +21,7 @@ struct Service {
         case getIdResponse(id: Int)
         case getCast(id: Int)
         case query(searchTerm: String)
+        case movieForPage(counter: Int)
     }
     
     static func requests(_ request: GET) -> URL? {
@@ -50,6 +51,9 @@ struct Service {
             
         case .query(let query):
             urlString = "https://api.themoviedb.org/3/search/movie?" + Secrets.API.TheMovieDBKey.apiKey + "&query=\(query)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        
+        case .movieForPage(let counter):
+            urlString = Service.baseURL + "upcoming?" + Secrets.API.TheMovieDBKey.apiKey + "&page=\(counter)"
         }
         return URL(string: urlString)
     }

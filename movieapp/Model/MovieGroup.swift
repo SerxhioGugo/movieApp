@@ -14,8 +14,14 @@ struct MovieGroup: Decodable {
 
 struct MovieResults: Decodable {
     let posterPath: String?
+    let title: String?
+    let backdropPath: String?
+    let releaseDate: String?
     
     private enum CodingKeys: String, CodingKey {
         case posterPath = "poster_path"
+        case title
+        case backdropPath = "backdrop_path"
+        case releaseDate = "release_date"
     }
 }

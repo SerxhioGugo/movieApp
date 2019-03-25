@@ -26,7 +26,7 @@ class HomeCell: UICollectionViewCell {
        let image = UIImageView()
         image.contentMode = .scaleAspectFill
         image.layer.masksToBounds = true
-        image.layer.cornerRadius = 6
+//        image.layer.cornerRadius = 6
         return image
     }()
     

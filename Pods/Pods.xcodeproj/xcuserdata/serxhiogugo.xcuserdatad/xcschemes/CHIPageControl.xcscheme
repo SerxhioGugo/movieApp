@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "16C90D6579886BE43FBE6CD9398E85D3"
-               BuildableName = "SDWebImage.framework"
-               BlueprintName = "SDWebImage"
+               BlueprintIdentifier = "B3B93A64221AF129207A86BA0F0C1A6A"
+               BuildableName = "CHIPageControl.framework"
+               BlueprintName = "CHIPageControl"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "16C90D6579886BE43FBE6CD9398E85D3"
-            BuildableName = "SDWebImage.framework"
-            BlueprintName = "SDWebImage"
+            BlueprintIdentifier = "B3B93A64221AF129207A86BA0F0C1A6A"
+            BuildableName = "CHIPageControl.framework"
+            BlueprintName = "CHIPageControl"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

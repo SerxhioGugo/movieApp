@@ -101,7 +101,7 @@ extension HomeFeedController {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return .init(width: view.frame.width, height: (view.frame.height / 3.0))
+        return .init(width: view.frame.width, height: (view.frame.height / 3.1))
     }
 }
 

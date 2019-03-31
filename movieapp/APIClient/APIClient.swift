@@ -12,7 +12,7 @@ class APIClient {
     static let shared = APIClient()
     
     func fetchUpcomingMovies(completion: @escaping (MovieGroup?, Error?) -> Void) {
-        let urlString = "https://api.themoviedb.org/3/movie/upcoming?api_key=acb5063b86a8efb1ba814b6ad605f578"
+        let urlString = "https://api.themoviedb.org/3/movie/popular?api_key=acb5063b86a8efb1ba814b6ad605f578"
         fetchGenericJSONData(urlString: urlString, completion: completion)
     }
 
@@ -23,16 +23,23 @@ class APIClient {
     
     func fetchGenericJSONData<T: Decodable>(urlString: String, completion: @escaping (T?, Error?) -> Void) {
         
-        print("T is type: ", T.self)
-        
         guard let url = URL(string: urlString) else { return }
         
-        URLSession.shared.dataTask(with: url) { (data, resp, err) in
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: url) { (data, response, error) in
             
-            if let err = err {
-                completion(nil, err)
+            if let error = error {
+                completion(nil, error)
                 return
             }
+            
+            if let httpResponse = response as? HTTPURLResponse{
+                if httpResponse.statusCode > 200 {
+                    print("Error with network request: \(httpResponse)")
+                    return
+                }
+            }
+            
             do {
                 let objects = try JSONDecoder().decode(T.self, from: data!)
                 completion(objects,nil)
@@ -41,6 +48,7 @@ class APIClient {
                 print("Failed to decode: ", error)
             }
             
-            }.resume()
+        }
+        dataTask.resume()
     }
 }

@@ -30,52 +30,11 @@ class HomeFeedController: BaseListController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView.refreshControl = self.refresher
-        refresher.addTarget(self, action: #selector(handlePullToRefresh), for: .valueChanged)
-        
         setupNavController()
         setupLayout()
         setupCollectionView()
         
         fetchData()
-    }
-    
-    fileprivate func setupCollectionView() {
-        collectionView.refreshControl = self.refresher
-        collectionView.register(HomeCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView.register(HomeFeedHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
-        collectionView.register(HomeFeedLoadingFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: footerId)
-        collectionView.backgroundColor = .blueDark1
-        collectionView.allowsSelection = true
-        collectionView.showsHorizontalScrollIndicator = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "upArrow"), style: .plain, target: self, action: #selector(handleScrollToTop))
-    }
-    
-    fileprivate func setupNavController() {
-        navigationController?.navigationBar.barTintColor = UIColor.blueDark3
-        navigationController?.navigationBar.prefersLargeTitles = false
-        let attributes = [NSAttributedString.Key.foregroundColor : UIColor.sunnyOrange]
-        navigationController?.navigationBar.largeTitleTextAttributes = attributes
-        navigationController?.navigationBar.titleTextAttributes = attributes
-    }
-    
-    fileprivate func setupLayout() {
-        if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.scrollDirection = .vertical
-        }
-    }
-    
-    @objc func handleScrollToTop() {
-        collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredVertically, animated: true)
-    }
-    
-    @objc func handlePullToRefresh() {
-        DispatchQueue.main.async {
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
-                self.collectionView.reloadData()
-                self.refresher.endRefreshing()
-            })
-        }
     }
     
     func fetchData() {
@@ -102,6 +61,38 @@ class HomeFeedController: BaseListController {
         }
     }
     
+    @objc func handlePullToRefresh() {
+        DispatchQueue.main.async {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
+                self.collectionView.reloadData()
+                self.refresher.endRefreshing()
+            })
+        }
+    }
+    
+    fileprivate func setupCollectionView() {
+        collectionView.refreshControl = self.refresher
+        collectionView.register(HomeCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(HomeFeedHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
+        collectionView.register(HomeFeedLoadingFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: footerId)
+        collectionView.backgroundColor = .black
+        collectionView.allowsSelection = true
+        collectionView.showsHorizontalScrollIndicator = false
+    }
+    
+    fileprivate func setupNavController() {
+        navigationController?.navigationBar.barTintColor = UIColor.blueDark3
+        navigationController?.navigationBar.prefersLargeTitles = false
+        let attributes = [NSAttributedString.Key.foregroundColor : UIColor.sunnyOrange]
+        navigationController?.navigationBar.largeTitleTextAttributes = attributes
+        navigationController?.navigationBar.titleTextAttributes = attributes
+    }
+    
+    fileprivate func setupLayout() {
+        if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.scrollDirection = .vertical
+        }
+    }
 }
 
 //MARK: Header ~ go through please
@@ -153,7 +144,7 @@ extension HomeFeedController: UICollectionViewDelegateFlowLayout {
             isPaginating = true
             counter += 1
             
-            let jsonUrl = "https://api.themoviedb.org/3/movie/upcoming?api_key=acb5063b86a8efb1ba814b6ad605f578&page=\(counter)"
+            let jsonUrl = "https://api.themoviedb.org/3/movie/popular?api_key=acb5063b86a8efb1ba814b6ad605f578&page=\(counter)"
             
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
                 APIClient.shared.fetchGenericJSONData(urlString: jsonUrl) { (request: MovieGroup?, error) in

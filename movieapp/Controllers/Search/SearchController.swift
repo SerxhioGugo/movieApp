@@ -28,7 +28,7 @@ class SearchController: BaseListController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView.backgroundColor = UIColor.blueDark1
+        collectionView.backgroundColor = UIColor.blueDark3
         collectionView.register(SearchCell.self, forCellWithReuseIdentifier: cellId)
         
         view.addSubview(enterSearchTermLabel)

@@ -15,9 +15,9 @@ extension UIColor {
     //Paste HEX value after 0x
     //Example:
     static var myGrayColor: UIColor { return UIColor.init(rgb: 0x2f3640)}
-    static var blueDark3: UIColor { return UIColor.init(rgb: 0x022c43)}
-    static var blueDark2: UIColor { return UIColor.init(rgb: 0x053F5E)}
-    static var blueDark1: UIColor { return UIColor.init(rgb: 0x115173)}
+    static var blueDark3: UIColor { return UIColor.init(rgb: 0x1e272e)}
+    static var blueDark2: UIColor { return UIColor.init(rgb: 0x5341A6)}
+    static var blueDark1: UIColor { return UIColor.init(rgb: 0x5965D5)}
     static var sunnyOrange: UIColor { return UIColor.init(rgb: 0xffd700)}
     
     convenience init(rgb: Int) {

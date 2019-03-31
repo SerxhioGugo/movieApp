@@ -25,7 +25,7 @@ class NowPlayingController: BaseListController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.backgroundColor = .blueDark1
+        collectionView.backgroundColor = .black
         collectionView.isPagingEnabled = true
         collectionView.register(NowPlayingCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.showsHorizontalScrollIndicator = false

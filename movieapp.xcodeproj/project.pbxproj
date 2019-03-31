@@ -11,7 +11,6 @@
 		62219E3B2247192700493680 /* HomeFeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62219E3A2247192700493680 /* HomeFeedHeader.swift */; };
 		629749DD22360CD90007D346 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629749DC22360CD90007D346 /* AppDelegate.swift */; };
 		629749DF22360CD90007D346 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629749DE22360CD90007D346 /* ViewController.swift */; };
-		629749E222360CD90007D346 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 629749E022360CD90007D346 /* Main.storyboard */; };
 		629749E422360CDB0007D346 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 629749E322360CDB0007D346 /* Assets.xcassets */; };
 		629749E722360CDB0007D346 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 629749E522360CDB0007D346 /* LaunchScreen.storyboard */; };
 		629749EF22360D130007D346 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629749EE22360D130007D346 /* Secrets.swift */; };
@@ -47,7 +46,6 @@
 		629749D922360CD90007D346 /* movieapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = movieapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		629749DC22360CD90007D346 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		629749DE22360CD90007D346 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		629749E122360CD90007D346 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		629749E322360CDB0007D346 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		629749E622360CDB0007D346 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		629749E822360CDB0007D346 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -119,7 +117,6 @@
 				62974A0D22362B000007D346 /* View */,
 				629749FA22360F6E0007D346 /* Controllers */,
 				629749DE22360CD90007D346 /* ViewController.swift */,
-				629749E022360CD90007D346 /* Main.storyboard */,
 				629749E322360CDB0007D346 /* Assets.xcassets */,
 				629749E522360CDB0007D346 /* LaunchScreen.storyboard */,
 				629749E822360CDB0007D346 /* Info.plist */,
@@ -313,7 +310,6 @@
 			files = (
 				629749E722360CDB0007D346 /* LaunchScreen.storyboard in Resources */,
 				629749E422360CDB0007D346 /* Assets.xcassets in Resources */,
-				629749E222360CD90007D346 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,14 +394,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		629749E022360CD90007D346 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				629749E122360CD90007D346 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		629749E522360CDB0007D346 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -541,7 +529,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H5U56L4EAR;
 				INFOPLIST_FILE = movieapp/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.serxhiogugo.movieapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -557,7 +548,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H5U56L4EAR;
 				INFOPLIST_FILE = movieapp/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.serxhiogugo.movieapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;

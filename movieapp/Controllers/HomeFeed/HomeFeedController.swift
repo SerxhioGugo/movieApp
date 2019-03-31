@@ -17,11 +17,21 @@ class HomeFeedController: BaseListController {
     fileprivate var isDonePaginating: Bool = false
     fileprivate var counter: Int = 1
     
+    lazy var refresher: UIRefreshControl = {
+        let refresh = UIRefreshControl()
+        refresh.addTarget(self, action: #selector(handlePullToRefresh), for: .valueChanged)
+        refresh.tintColor = .sunnyOrange
+        return refresh
+    }()
+    
     var movieGroup = [MovieResults]()
-    var nowPlaying = [MovieResults]()
+    var nowPlaying: MovieGroup?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        collectionView.refreshControl = self.refresher
+        refresher.addTarget(self, action: #selector(handlePullToRefresh), for: .valueChanged)
         
         setupNavController()
         setupLayout()
@@ -31,6 +41,7 @@ class HomeFeedController: BaseListController {
     }
     
     fileprivate func setupCollectionView() {
+        collectionView.refreshControl = self.refresher
         collectionView.register(HomeCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.register(HomeFeedHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView.register(HomeFeedLoadingFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: footerId)
@@ -40,8 +51,31 @@ class HomeFeedController: BaseListController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "upArrow"), style: .plain, target: self, action: #selector(handleScrollToTop))
     }
     
+    fileprivate func setupNavController() {
+        navigationController?.navigationBar.barTintColor = UIColor.blueDark3
+        navigationController?.navigationBar.prefersLargeTitles = false
+        let attributes = [NSAttributedString.Key.foregroundColor : UIColor.sunnyOrange]
+        navigationController?.navigationBar.largeTitleTextAttributes = attributes
+        navigationController?.navigationBar.titleTextAttributes = attributes
+    }
+    
+    fileprivate func setupLayout() {
+        if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.scrollDirection = .vertical
+        }
+    }
+    
     @objc func handleScrollToTop() {
         collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredVertically, animated: true)
+    }
+    
+    @objc func handlePullToRefresh() {
+        DispatchQueue.main.async {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
+                self.collectionView.reloadData()
+                self.refresher.endRefreshing()
+            })
+        }
     }
     
     func fetchData() {
@@ -58,7 +92,7 @@ class HomeFeedController: BaseListController {
         dispatchGroup.enter()
         APIClient.shared.fetchNowPlayingMovies { (movieGroup, error) in
             dispatchGroup.leave()
-            guard let result = movieGroup?.results else { return }
+            guard let result = movieGroup else { return }
             self.nowPlaying = result
         }
         
@@ -68,19 +102,6 @@ class HomeFeedController: BaseListController {
         }
     }
     
-    fileprivate func setupNavController() {
-        navigationController?.navigationBar.barTintColor = UIColor.blueDark3
-        navigationController?.navigationBar.prefersLargeTitles = false
-        let attributes = [NSAttributedString.Key.foregroundColor : UIColor.sunnyOrange]
-        navigationController?.navigationBar.largeTitleTextAttributes = attributes
-        navigationController?.navigationBar.titleTextAttributes = attributes
-    }
-    
-    fileprivate func setupLayout() {
-        if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.scrollDirection = .vertical
-        }
-    }
 }
 
 //MARK: Header ~ go through please
@@ -174,4 +195,3 @@ extension HomeFeedController: UICollectionViewDelegateFlowLayout {
         return .init(top: 5, left: 5, bottom: 5, right: 5)
     }
 }
-

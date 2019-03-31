@@ -12,7 +12,7 @@ import CHIPageControl
 class NowPlayingController: BaseListController {
     
     fileprivate let cellId = "cellId"
-    var nowPlaying = [MovieResults]()
+    var nowPlaying: MovieGroup?
     
     lazy var pageControl: CHIBasePageControl = {
        let pc = CHIPageControlJalapeno()
@@ -47,12 +47,12 @@ class NowPlayingController: BaseListController {
 extension NowPlayingController: UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return nowPlaying.count
+        return nowPlaying?.results.count ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! NowPlayingCell
-        let nowPlayingMovies = nowPlaying[indexPath.item]
+        let nowPlayingMovies = nowPlaying?.results[indexPath.item]
         cell.dataSource = nowPlayingMovies
         return cell
     }

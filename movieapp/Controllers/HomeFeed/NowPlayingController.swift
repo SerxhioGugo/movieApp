@@ -14,6 +14,8 @@ class NowPlayingController: BaseListController {
     fileprivate let cellId = "cellId"
     var nowPlaying: MovieGroup?
     
+    var didSelectHandler: ((MovieResults) -> ())?
+    
     lazy var pageControl: CHIBasePageControl = {
        let pc = CHIPageControlJalapeno()
         pc.numberOfPages = 20
@@ -64,6 +66,15 @@ extension NowPlayingController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
-    
-    
+}
+
+//CollectionView Delegate
+extension NowPlayingController {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if let nowPlayingMovies = nowPlaying?.results[indexPath.item] {
+//            print(nowPlayingMovies?.title)
+            didSelectHandler?(nowPlayingMovies)
+        }
+    }
 }

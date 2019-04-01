@@ -24,7 +24,7 @@ class HomeFeedController: BaseListController {
         return refresh
     }()
     
-    var movieGroup = [MovieResults]()
+    var movieGroup: MovieGroup?
     var nowPlaying: MovieGroup?
 
     override func viewDidLoad() {
@@ -37,6 +37,15 @@ class HomeFeedController: BaseListController {
         fetchData()
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setNeedsStatusBarAppearanceUpdate()
+    }
+    
     func fetchData() {
         
         let dispatchGroup = DispatchGroup()
@@ -44,7 +53,7 @@ class HomeFeedController: BaseListController {
         dispatchGroup.enter()
         APIClient.shared.fetchUpcomingMovies { (movieGroup, error) in
             dispatchGroup.leave()
-            guard let result = movieGroup?.results else { return }
+            guard let result = movieGroup else { return }
             self.movieGroup = result
         }
         
@@ -81,8 +90,10 @@ class HomeFeedController: BaseListController {
     }
     
     fileprivate func setupNavController() {
+        navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.barTintColor = UIColor.blueDark3
         navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationBar.isOpaque = true
         let attributes = [NSAttributedString.Key.foregroundColor : UIColor.sunnyOrange]
         navigationController?.navigationBar.largeTitleTextAttributes = attributes
         navigationController?.navigationBar.titleTextAttributes = attributes
@@ -103,6 +114,12 @@ extension HomeFeedController {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! HomeFeedHeader
             header.nowPlayingController.nowPlaying = self.nowPlaying
             header.nowPlayingController.collectionView.reloadData()
+            
+            header.nowPlayingController.didSelectHandler = { [weak self] movieResults in
+                let movieDetailController = MovieDetailController()
+                movieDetailController.navigationItem.title = movieResults.title
+                self?.navigationController?.pushViewController(movieDetailController, animated: true)
+            }
             
             return header
         } else if kind == UICollectionView.elementKindSectionFooter {
@@ -131,15 +148,15 @@ extension HomeFeedController {
 extension HomeFeedController: UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movieGroup.count
+        return movieGroup?.results.count ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeCell
-        let movie = movieGroup[indexPath.item]
+        let movie = movieGroup?.results[indexPath.item]
         cell.imageDataSource = movie
         
-        if indexPath.item == movieGroup.count - 1 && !isPaginating {
+        if indexPath.item == (movieGroup?.results.count ?? 0) - 1 && !isPaginating {
             
             isPaginating = true
             counter += 1
@@ -158,7 +175,7 @@ extension HomeFeedController: UICollectionViewDelegateFlowLayout {
                     }
                     
                     guard let result = request?.results else { return }
-                    self.movieGroup += result
+                    self.movieGroup?.results += result
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
                     }
@@ -166,6 +183,7 @@ extension HomeFeedController: UICollectionViewDelegateFlowLayout {
                     self.isPaginating = false
                 }
             }
+            
         }
         return cell
     }
@@ -184,5 +202,12 @@ extension HomeFeedController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return .init(top: 5, left: 5, bottom: 5, right: 5)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movie = movieGroup?.results[indexPath.item]
+        let movieDetailController = MovieDetailController()
+        movieDetailController.title = movie?.title
+        self.navigationController?.pushViewController(movieDetailController, animated: true)
     }
 }

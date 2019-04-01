@@ -76,23 +76,30 @@ class SearchController: BaseListController, UISearchBarDelegate {
             }
         })
     }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false, block: { (_) in
-            guard let url = Service.requests(.query(searchTerm: searchText)) else { return }
-            Service.fetchJSON(url: url) { (request: Search?, error) in
-                if let error = error {
-                    print("Error fetching data: ", error)
-                }
-                guard let request = request?.results else { return }
-                self.searchResult = request
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                }
-            }
-        })
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        DispatchQueue.main.async {
+            self.searchResult.removeAll()
+            self.collectionView.reloadData()
+        }
+        
     }
+    
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        timer?.invalidate()
+//        timer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false, block: { (_) in
+//            guard let url = Service.requests(.query(searchTerm: searchText)) else { return }
+//            Service.fetchJSON(url: url) { (request: Search?, error) in
+//                if let error = error {
+//                    print("Error fetching data: ", error)
+//                }
+//                guard let request = request?.results else { return }
+//                self.searchResult = request
+//                DispatchQueue.main.async {
+//                    self.collectionView.reloadData()
+//                }
+//            }
+//        })
+//    }
 }
 
 extension SearchController: UICollectionViewDelegateFlowLayout {

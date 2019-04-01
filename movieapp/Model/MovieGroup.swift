@@ -9,7 +9,7 @@
 import Foundation
 
 struct MovieGroup: Decodable {
-    let results: [MovieResults]
+    var results: [MovieResults]
 }
 
 struct MovieResults: Decodable {

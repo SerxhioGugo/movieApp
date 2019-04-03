@@ -44,6 +44,7 @@ class HomeFeedController: BaseListController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()
+        navigationController?.navigationBar.isHidden = false
     }
     
     func fetchData() {
@@ -84,7 +85,7 @@ class HomeFeedController: BaseListController {
         collectionView.register(HomeCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.register(HomeFeedHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView.register(HomeFeedLoadingFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: footerId)
-        collectionView.backgroundColor = .black
+        collectionView.backgroundColor = .myBlack
         collectionView.allowsSelection = true
         collectionView.showsHorizontalScrollIndicator = false
     }
@@ -93,7 +94,7 @@ class HomeFeedController: BaseListController {
         navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.barTintColor = UIColor.blueDark3
         navigationController?.navigationBar.prefersLargeTitles = false
-        navigationController?.navigationBar.isOpaque = true
+        navigationController?.navigationBar.isTranslucent = true
         let attributes = [NSAttributedString.Key.foregroundColor : UIColor.sunnyOrange]
         navigationController?.navigationBar.largeTitleTextAttributes = attributes
         navigationController?.navigationBar.titleTextAttributes = attributes
@@ -118,6 +119,8 @@ extension HomeFeedController {
             header.nowPlayingController.didSelectHandler = { [weak self] movieResults in
                 let movieDetailController = MovieDetailController()
                 movieDetailController.navigationItem.title = movieResults.title
+                movieDetailController.movieId = movieResults.id
+                
                 self?.navigationController?.pushViewController(movieDetailController, animated: true)
             }
             
@@ -207,6 +210,7 @@ extension HomeFeedController: UICollectionViewDelegateFlowLayout {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let movie = movieGroup?.results[indexPath.item]
         let movieDetailController = MovieDetailController()
+        movieDetailController.movieId = movie?.id
         movieDetailController.title = movie?.title
         self.navigationController?.pushViewController(movieDetailController, animated: true)
     }

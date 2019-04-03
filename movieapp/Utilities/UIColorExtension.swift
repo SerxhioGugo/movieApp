@@ -19,6 +19,7 @@ extension UIColor {
     static var blueDark2: UIColor { return UIColor.init(rgb: 0x5341A6)}
     static var blueDark1: UIColor { return UIColor.init(rgb: 0x5965D5)}
     static var sunnyOrange: UIColor { return UIColor.init(rgb: 0xffd700)}
+    static var myBlack: UIColor { return UIColor.init(rgb: 0x03050A)}
     
     convenience init(rgb: Int) {
         self.init(

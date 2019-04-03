@@ -1,5 +1,7 @@
 # MovieApp
-Copyright © 2019 | Serxhio Gugo
+(Work in progress)
+
+Copyright © 2019 | Serxhio Gugo 
 
 ## API | TheMovieDB 
 [![](https://www.themoviedb.org/assets/1/v4/logos/293x302-powered-by-square-green-3ee4814bb59d8260d51efdd7c124383540fc04ca27d23eaea3a8c87bfa0f388d.png)](https://developers.themoviedb.org/3/getting-started/introduction/ "")

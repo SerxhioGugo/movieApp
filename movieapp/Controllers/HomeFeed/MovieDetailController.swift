@@ -55,6 +55,7 @@ class MovieDetailController: BaseListController {
         collectionView.backgroundColor = .white
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.register(MovieDetailCell.self, forCellWithReuseIdentifier: movieDetailId)
+        collectionView.bounces = false
         
         navigationController?.navigationBar.isHidden = true
         
@@ -78,7 +79,15 @@ class MovieDetailController: BaseListController {
 extension MovieDetailController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: view.frame.width, height: view.frame.height)
+
+        let dummyCell = MovieDetailCell(frame: .init(x: 0, y: 0, width: view.frame.width, height: 1000))
+        dummyCell.overviewLabel.text = movieDetails?.overview
+        dummyCell.layoutIfNeeded()
+        let estimatedSize = dummyCell.systemLayoutSizeFitting(.init(width: view.frame.width, height: 1000))
+
+        
+        
+        return .init(width: view.frame.width, height: estimatedSize.height)
     }
     
 }

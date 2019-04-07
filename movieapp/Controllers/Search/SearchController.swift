@@ -76,13 +76,13 @@ class SearchController: BaseListController, UISearchBarDelegate {
             }
         })
     }
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        DispatchQueue.main.async {
-            self.searchResult.removeAll()
-            self.collectionView.reloadData()
-        }
-        
-    }
+//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+//        DispatchQueue.main.async {
+//            self.searchResult.removeAll()
+//            self.collectionView.reloadData()
+//        }
+//
+//    }
     
 //    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 //        timer?.invalidate()
@@ -136,5 +136,15 @@ extension SearchController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return .init(top: 5, left: 5, bottom: 5, right: 5)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movie = searchResult[indexPath.item]
+        let movieDetailController = MovieDetailController()
+//        movieDetailController.modalPresentationStyle = .overCurrentContext
+//        movieDetailController.modalTransitionStyle = .crossDissolve
+        movieDetailController.movieId = movie.id
+        present(movieDetailController, animated: true)
+        
     }
 }

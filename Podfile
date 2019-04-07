@@ -8,4 +8,5 @@ target 'movieapp' do
   # Pods for movieapp
 pod 'SDWebImage'
 pod 'CHIPageControl', '~> 0.1.3'
+pod 'Cosmos', '~> 18.0'
 end

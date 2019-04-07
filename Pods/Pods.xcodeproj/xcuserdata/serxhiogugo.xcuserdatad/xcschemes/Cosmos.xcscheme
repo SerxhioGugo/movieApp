@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B3B93A64221AF129207A86BA0F0C1A6A"
-               BlueprintName = "CHIPageControl"
+               BlueprintIdentifier = "4FDC533A4360A68ABDCE852F04B30927"
+               BlueprintName = "Cosmos"
                ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "CHIPageControl.framework">
+               BuildableName = "Cosmos.framework">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

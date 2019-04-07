@@ -12,15 +12,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(bg)
-        bg.fillSuperview()
+
     }
 
-    let bg: UIView = {
-       let bg = Gradient()
-        return bg
-    }()
-
-    
 }
 

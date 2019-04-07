@@ -21,9 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = mainTabBarController
         window?.makeKeyAndVisible()
         
-//        UINavigationBar.appearance().titleTextAttributes = [
-//            NSAttributedString.Key.font: UIFont(name: "Cochin-BoldItalic", size: 20)!]
-        
+        UINavigationBar.appearance().titleTextAttributes = [
+            NSAttributedString.Key.font: UIFont(name:Fonts.latoHeavy, size: 25)! ,
+            NSAttributedString.Key.foregroundColor : UIColor.sunnyOrange
+        ]
         
         return true
     }

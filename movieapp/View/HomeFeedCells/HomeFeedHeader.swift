@@ -12,9 +12,9 @@ class HomeFeedHeader: UICollectionReusableView {
 
     let nowPlayingLabel: UILabel = {
         let label = UILabel()
-        label.text = "TOP PICKS FOR YOU"
+        label.text = "Top Picks"
         label.backgroundColor = .clear
-        label.font = .boldSystemFont(ofSize: 17)
+        label.font = UIFont(name: Fonts.latoHeavy, size: 18)
         label.textColor = .sunnyOrange
         return label
     }()

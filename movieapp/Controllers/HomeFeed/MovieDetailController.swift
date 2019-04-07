@@ -31,14 +31,13 @@ class MovieDetailController: BaseListController {
                     self.movieDetails = movie
                     self.collectionView.reloadData()
                 }
-                
             }
         }
     }
     let dismissButton: UIButton = {
         let button = UIButton()
         button.setTitle("X", for: .normal)
-        button.backgroundColor = UIColor.lightGray.withAlphaComponent(0.75)
+        button.backgroundColor = UIColor.lightGray.withAlphaComponent(0.50)
         button.titleLabel?.textColor = .black
         button.layer.cornerRadius = 25
         button.addTarget(self, action: #selector(handleDissmiss), for: .touchUpInside)
@@ -46,7 +45,7 @@ class MovieDetailController: BaseListController {
     }()
     
     @objc func handleDissmiss() {
-        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -55,7 +54,6 @@ class MovieDetailController: BaseListController {
         collectionView.backgroundColor = .white
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.register(MovieDetailCell.self, forCellWithReuseIdentifier: movieDetailId)
-        collectionView.bounces = false
         
         navigationController?.navigationBar.isHidden = true
         
@@ -84,8 +82,6 @@ extension MovieDetailController: UICollectionViewDelegateFlowLayout {
         dummyCell.overviewLabel.text = movieDetails?.overview
         dummyCell.layoutIfNeeded()
         let estimatedSize = dummyCell.systemLayoutSizeFitting(.init(width: view.frame.width, height: 1000))
-
-        
         
         return .init(width: view.frame.width, height: estimatedSize.height)
     }

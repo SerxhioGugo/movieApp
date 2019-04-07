@@ -120,8 +120,9 @@ extension HomeFeedController {
                 let movieDetailController = MovieDetailController()
                 movieDetailController.navigationItem.title = movieResults.title
                 movieDetailController.movieId = movieResults.id
-                
-                self?.navigationController?.pushViewController(movieDetailController, animated: true)
+                movieDetailController.modalPresentationStyle = .overCurrentContext
+                movieDetailController.modalTransitionStyle = .crossDissolve
+            self!.present(movieDetailController, animated: true)
             }
             
             return header
@@ -210,8 +211,10 @@ extension HomeFeedController: UICollectionViewDelegateFlowLayout {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let movie = movieGroup?.results[indexPath.item]
         let movieDetailController = MovieDetailController()
+        movieDetailController.modalPresentationStyle = .overCurrentContext
+        movieDetailController.modalTransitionStyle = .crossDissolve
         movieDetailController.movieId = movie?.id
         movieDetailController.title = movie?.title
-        self.navigationController?.pushViewController(movieDetailController, animated: true)
+        self.present(movieDetailController, animated: true)
     }
 }

@@ -8,20 +8,38 @@
 
 import UIKit
 import SDWebImage
+import Cosmos
 
 class MovieDetailCell: UICollectionViewCell {
-    
+
     var dataSource: Any? {
         didSet {
             guard
                 let movieDetails = dataSource as? MovieDetail,
-                let wallpaperImage = movieDetails.posterPath,
-                let wallpaperUrl = URL(string: "https://image.tmdb.org/t/p/w500\(wallpaperImage)")
+                let wallpaperImage = movieDetails.backdropPath,
+                let wallpaperUrl = URL(string: "https://image.tmdb.org/t/p/original\(wallpaperImage)"),
+                let posterImage = movieDetails.posterPath,
+                let posterUrl = URL(string: "https://image.tmdb.org/t/p/w500\(posterImage)"),
+                let voteAverage = movieDetails.voteAverage,
+                let genres = movieDetails.genres,
+                let runtime = movieDetails.runtime
                 else { return}
+            
+            let formatter = DateComponentsFormatter()
+            formatter.allowedUnits = [.hour, .minute]
+            formatter.unitsStyle = .abbreviated
+            formatter.zeroFormattingBehavior = .pad
+            formatter.allowsFractionalUnits = true
+            let formatedRuntime = formatter.string(from: TimeInterval(runtime * 60))
+            
+            
             self.wallpaperImage.sd_setImage(with: wallpaperUrl)
+            self.posterImage.sd_setImage(with: posterUrl)
             self.movieTitleLabel.text = movieDetails.title ?? "No title provided for this movie."
-            self.runtimeLabel.text = "\(movieDetails.runtime ?? 0)"
             self.overviewLabel.text = movieDetails.overview ?? "Description not provided."
+            self.runtimeLabel.text = " \(formatedRuntime ?? "") | \(genres[0].name ?? "None")"
+            self.cosmosRating.rating = voteAverage / 2
+            self.cosmosRating.text = "TMDB: \(voteAverage)"
         }
     }
     
@@ -33,38 +51,35 @@ class MovieDetailCell: UICollectionViewCell {
     
     let wallpaperImage: UIImageView = {
        let img = UIImageView()
-        img.contentMode = .scaleToFill
-        img.clipsToBounds = true
-        
+        img.contentMode = .scaleAspectFill
+//        img.clipsToBounds = true
         return img
     }()
     
     let posterImage: UIImageView = {
         let img = UIImageView()
-        img.image = #imageLiteral(resourceName: "marvelPoster")
+        img.image = #imageLiteral(resourceName: "imageNotFound")
         img.contentMode = .scaleAspectFit
         img.clipsToBounds = true
+        img.translatesAutoresizingMaskIntoConstraints = false
         img.dropShadow()
         return img
     }()
     
     let playTrailerButton: UIButton = {
         let button = UIButton()
-        button.setTitle("PLAY TRAILER", for: .normal)
-        button.titleLabel?.textColor = .white
-        button.titleLabel?.adjustsFontSizeToFitWidth = true
-        button.titleLabel?.font = .boldSystemFont(ofSize: 15)
-        button.backgroundColor = .sunnyOrange
-        button.layer.cornerRadius = 8
+        button.setBackgroundImage(#imageLiteral(resourceName: "fancyPlayButton"), for: .normal)
         button.addTarget(self, action: #selector(handlePlayTrailer), for: .touchUpInside)
         return button
     }()
     
     let movieTitleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
-        label.text = "Captain Marvel"
-        label.font = UIFont(name: "Lato-Medium", size: 30)
+        label.textColor = .sunnyOrange
+        label.text = "No title provided"
+        label.font = UIFont(name: Fonts.latoHeavy, size: 30)
+        label.numberOfLines = 2
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
@@ -72,34 +87,81 @@ class MovieDetailCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "2h 32min"
         label.textColor = .white
-        label.font = UIFont(name: "Lato-Regular", size: 12)
+        label.font = UIFont(name: Fonts.latoRegular, size: 12)
         label.numberOfLines = 1
         return label
+    }()
+    
+    let overview: UILabel = {
+        let label = UILabel()
+        label.text = "OVERVIEW"
+        label.textColor = .sunnyOrange
+        label.font = UIFont(name: Fonts.latoBold, size: 12)
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    lazy var cosmosRating: CosmosView = {
+        let cosmos = CosmosView()
+        cosmos.settings.totalStars = 5
+        cosmos.settings.updateOnTouch = false
+        cosmos.settings.filledColor = .sunnyOrange
+        cosmos.settings.emptyBorderColor = .gray
+        cosmos.settings.fillMode = .precise
+        cosmos.settings.starSize = 20
+        cosmos.rating = 0
+        cosmos.settings.textFont = UIFont(name: Fonts.latoMedium, size: 14)!
+        cosmos.settings.textColor = .white
+        return cosmos
     }()
     
     let overviewLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = UIFont(name: "Lato-Light", size: 18)
+        label.text = "Not found"
+        label.font = UIFont(name: Fonts.latoLight, size: 18)
         label.numberOfLines = 0
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .myBlack
+        backgroundColor = UIColor.myBlack
 
         
-        let stackView = VerticalStackView(arrangedSubviews: [
-                    wallpaperImage,
+        addSubview(wallpaperImage)
+        wallpaperImage.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, size: .init(width: 0, height: 300))
+        
+        wallpaperImage.addSubview(playTrailerButton)
+        playTrailerButton.centerInSuperview(size: .init(width: 50, height: 50))
+        
+        addSubview(posterImage)
+        NSLayoutConstraint.activate([
+            posterImage.centerYAnchor.constraint(equalTo: wallpaperImage.bottomAnchor),
+            posterImage.leadingAnchor.constraint(equalTo: wallpaperImage.leadingAnchor, constant: 20),
+            posterImage.heightAnchor.constraint(equalToConstant: 175),
+            posterImage.widthAnchor.constraint(equalToConstant: 125),
+            ])
+        
+        let topStackView = VerticalStackView(arrangedSubviews: [
                     movieTitleLabel,
                     runtimeLabel,
-                    overviewLabel
+                    cosmosRating,
                     ], spacing: 5)
         
-        addSubview(stackView)
-        stackView.fillSuperview(padding: .init(top: 0, left: 0, bottom: 20, right: 0) )
-        wallpaperImage.constrainHeight(constant: 500)
+        let overviewStackView = VerticalStackView(arrangedSubviews: [
+            overview,
+            overviewLabel
+            ], spacing: 5)
+        
+        addSubview(overviewStackView)
+        overviewStackView.anchor(top: posterImage.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 20, left: 20, bottom: 20, right: 5))
+        
+        addSubview(topStackView)
+        topStackView.anchor(top: wallpaperImage.bottomAnchor, leading: posterImage.trailingAnchor, bottom: overviewStackView.topAnchor, trailing: trailingAnchor, padding: .init(top: 5, left: 20, bottom: 0, right: 5))
+        
+
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

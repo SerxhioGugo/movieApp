@@ -22,8 +22,12 @@ class MovieDetailCell: UICollectionViewCell {
                 let posterUrl = URL(string: "https://image.tmdb.org/t/p/w500\(posterImage)"),
                 let voteAverage = movieDetails.voteAverage,
                 let genres = movieDetails.genres,
-                let runtime = movieDetails.runtime
+                let runtime = movieDetails.runtime,
+                let date = movieDetails.releaseDate
                 else { return}
+            
+            
+            let dateToShowOnUI:String =  DateManager.methodStringFromDate(dateFromString: DateManager.methodDateFromString(stringDate: date) as NSDate)
             
             let formatter = DateComponentsFormatter()
             formatter.allowedUnits = [.hour, .minute]
@@ -32,12 +36,17 @@ class MovieDetailCell: UICollectionViewCell {
             formatter.allowsFractionalUnits = true
             let formatedRuntime = formatter.string(from: TimeInterval(runtime * 60))
             
+            UIView.animate(withDuration: 1.4) {
+                self.wallpaperImage.sd_setImage(with: wallpaperUrl)
+                self.wallpaperImage.alpha = 1
+                self.posterImage.sd_setImage(with: posterUrl)
+                self.posterImage.alpha = 1
+            }
             
-            self.wallpaperImage.sd_setImage(with: wallpaperUrl)
-            self.posterImage.sd_setImage(with: posterUrl)
+            
             self.movieTitleLabel.text = movieDetails.title ?? "No title provided for this movie."
             self.overviewLabel.text = movieDetails.overview ?? "Description not provided."
-            self.runtimeLabel.text = " \(formatedRuntime ?? "") | \(genres[0].name ?? "None")"
+            self.runtimeLabel.text = " \(formatedRuntime ?? "") • \(genres[0].name ?? "None") • \(dateToShowOnUI)"
             self.cosmosRating.rating = voteAverage / 2
             self.cosmosRating.text = "TMDB: \(voteAverage)"
         }
@@ -52,7 +61,8 @@ class MovieDetailCell: UICollectionViewCell {
     let wallpaperImage: UIImageView = {
        let img = UIImageView()
         img.contentMode = .scaleAspectFill
-//        img.clipsToBounds = true
+        img.clipsToBounds = true
+        img.alpha = 0
         return img
     }()
     
@@ -62,6 +72,7 @@ class MovieDetailCell: UICollectionViewCell {
         img.contentMode = .scaleAspectFit
         img.clipsToBounds = true
         img.translatesAutoresizingMaskIntoConstraints = false
+        img.alpha = 0
         img.dropShadow()
         return img
     }()
@@ -69,6 +80,7 @@ class MovieDetailCell: UICollectionViewCell {
     let playTrailerButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(#imageLiteral(resourceName: "fancyPlayButton"), for: .normal)
+        button.isUserInteractionEnabled = true
         button.addTarget(self, action: #selector(handlePlayTrailer), for: .touchUpInside)
         return button
     }()
@@ -85,7 +97,7 @@ class MovieDetailCell: UICollectionViewCell {
     
     let runtimeLabel: UILabel = {
         let label = UILabel()
-        label.text = "2h 32min"
+        label.text = "0h 0min"
         label.textColor = .white
         label.font = UIFont(name: Fonts.latoRegular, size: 12)
         label.numberOfLines = 1
@@ -127,15 +139,15 @@ class MovieDetailCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor.myBlack
-
         
         addSubview(wallpaperImage)
         wallpaperImage.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, size: .init(width: 0, height: 300))
         
         wallpaperImage.addSubview(playTrailerButton)
-        playTrailerButton.centerInSuperview(size: .init(width: 50, height: 50))
+        playTrailerButton.centerInSuperview(size: .init(width: 35, height: 35))
         
         addSubview(posterImage)
+        
         NSLayoutConstraint.activate([
             posterImage.centerYAnchor.constraint(equalTo: wallpaperImage.bottomAnchor),
             posterImage.leadingAnchor.constraint(equalTo: wallpaperImage.leadingAnchor, constant: 20),
@@ -160,16 +172,15 @@ class MovieDetailCell: UICollectionViewCell {
         addSubview(topStackView)
         topStackView.anchor(top: wallpaperImage.bottomAnchor, leading: posterImage.trailingAnchor, bottom: overviewStackView.topAnchor, trailing: trailingAnchor, padding: .init(top: 5, left: 20, bottom: 0, right: 5))
         
-
-        
+    }
+    
+    @objc func handlePlayTrailer() {
+        print("playyyyyy")
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
     
-    
-    @objc func handlePlayTrailer() {
-        print("Handle trailer pressed")
-    }
+
 }

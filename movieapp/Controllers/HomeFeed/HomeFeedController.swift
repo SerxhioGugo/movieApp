@@ -44,7 +44,6 @@ class HomeFeedController: BaseListController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()
-        navigationController?.navigationBar.isHidden = false
     }
     
     func fetchData() {

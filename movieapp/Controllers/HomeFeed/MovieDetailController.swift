@@ -14,6 +14,14 @@ class MovieDetailController: BaseListController {
     fileprivate let movieDetailId = "movieDetailId"
     var movieDetails: MovieDetail?
     
+    let aiv: UIActivityIndicatorView = {
+       let aiv = UIActivityIndicatorView()
+        aiv.backgroundColor = .myBlack
+        aiv.color = .sunnyOrange
+        aiv.startAnimating()
+        return aiv
+    }()
+    
     var movieId: Int! {
         didSet {
             print("here is my app id : \(movieId ?? 0)")
@@ -30,10 +38,13 @@ class MovieDetailController: BaseListController {
                 DispatchQueue.main.async {
                     self.movieDetails = movie
                     self.collectionView.reloadData()
+                    self.aiv.stopAnimating()
                 }
             }
         }
     }
+
+    
     let dismissButton: UIButton = {
         let button = UIButton()
         button.setTitle("X", for: .normal)
@@ -51,6 +62,9 @@ class MovieDetailController: BaseListController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.addSubview(aiv)
+        aiv.fillSuperview()
+        
         collectionView.backgroundColor = .white
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.register(MovieDetailCell.self, forCellWithReuseIdentifier: movieDetailId)
@@ -59,7 +73,17 @@ class MovieDetailController: BaseListController {
         
         view.addSubview(dismissButton)
         dismissButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil, bottom: nil, trailing: view.safeAreaLayoutGuide.trailingAnchor, size: .init(width: 50, height: 50))
+
         
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setNeedsStatusBarAppearanceUpdate()
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -82,7 +106,6 @@ extension MovieDetailController: UICollectionViewDelegateFlowLayout {
         dummyCell.overviewLabel.text = movieDetails?.overview
         dummyCell.layoutIfNeeded()
         let estimatedSize = dummyCell.systemLayoutSizeFitting(.init(width: view.frame.width, height: 1000))
-        
         return .init(width: view.frame.width, height: estimatedSize.height)
     }
     

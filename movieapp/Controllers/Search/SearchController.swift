@@ -19,7 +19,7 @@ class SearchController: BaseListController, UISearchBarDelegate {
         let label = UILabel()
         label.text = "🔍 Please enter a movie above..."
         label.textAlignment = .center
-        label.font = UIFont(name: "Avenir-Medium", size: 20)
+        label.font = UIFont(name: Fonts.latoBold, size: 20)
         label.numberOfLines = 0
         label.textColor = UIColor.sunnyOrange
         return label
@@ -38,7 +38,17 @@ class SearchController: BaseListController, UISearchBarDelegate {
         setupNavController()
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setNeedsStatusBarAppearanceUpdate()
+    }
+    
     fileprivate func setupNavController() {
+        navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.barTintColor = UIColor.blueDark3
         navigationController?.navigationBar.prefersLargeTitles = false
         let attributes = [NSAttributedString.Key.foregroundColor : UIColor.sunnyOrange]
@@ -56,6 +66,8 @@ class SearchController: BaseListController, UISearchBarDelegate {
         searchController.searchBar.placeholder = "Search movies..."
         searchController.searchBar.isTranslucent = false
         searchController.searchBar.barStyle = .blackTranslucent
+        searchController.searchBar.keyboardAppearance = .dark
+        searchController.searchBar.tintColor = .sunnyOrange
         
     }
     

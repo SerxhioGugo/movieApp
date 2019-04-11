@@ -13,7 +13,7 @@ struct MovieDetail: Codable {
     let backdropPath: String?
     let genres: [Genre]?
     let homepage: String?
-    let id: Int?
+    let id: Int
     let imdbID: String?
     let originalTitle, overview: String?
     let popularity: Double?

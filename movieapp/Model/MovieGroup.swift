@@ -17,7 +17,7 @@ struct MovieResults: Decodable {
     let title: String?
     let backdropPath: String?
     let releaseDate: String?
-    let id: Int?
+    let id: Int
     
     private enum CodingKeys: String, CodingKey {
         case posterPath = "poster_path"

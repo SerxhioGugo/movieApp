@@ -108,7 +108,7 @@ class MovieDetailCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "OVERVIEW"
         label.textColor = .sunnyOrange
-        label.font = UIFont(name: Fonts.latoBold, size: 12)
+        label.font = UIFont(name: Fonts.latoBold, size: 16)
         label.numberOfLines = 1
         return label
     }()
@@ -167,7 +167,7 @@ class MovieDetailCell: UICollectionViewCell {
             ], spacing: 5)
         
         addSubview(overviewStackView)
-        overviewStackView.anchor(top: posterImage.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 20, left: 20, bottom: 20, right: 5))
+        overviewStackView.anchor(top: posterImage.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 20, left: 20, bottom: 10, right: 5))
         
         addSubview(topStackView)
         topStackView.anchor(top: wallpaperImage.bottomAnchor, leading: posterImage.trailingAnchor, bottom: overviewStackView.topAnchor, trailing: trailingAnchor, padding: .init(top: 5, left: 20, bottom: 0, right: 5))

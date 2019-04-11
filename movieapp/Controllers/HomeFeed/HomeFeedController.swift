@@ -116,9 +116,8 @@ extension HomeFeedController {
             header.nowPlayingController.collectionView.reloadData()
             
             header.nowPlayingController.didSelectHandler = { [weak self] movieResults in
-                let movieDetailController = MovieDetailController()
+                let movieDetailController = MovieDetailController(movieId: movieResults.id)
                 movieDetailController.navigationItem.title = movieResults.title
-                movieDetailController.movieId = movieResults.id
                 movieDetailController.modalPresentationStyle = .overCurrentContext
                 movieDetailController.modalTransitionStyle = .crossDissolve
             self!.present(movieDetailController, animated: true)
@@ -208,12 +207,11 @@ extension HomeFeedController: UICollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let movie = movieGroup?.results[indexPath.item]
-        let movieDetailController = MovieDetailController()
+        guard let movie = movieGroup?.results[indexPath.item] else { return }
+        let movieDetailController = MovieDetailController(movieId: movie.id)
         movieDetailController.modalPresentationStyle = .overCurrentContext
         movieDetailController.modalTransitionStyle = .crossDissolve
-        movieDetailController.movieId = movie?.id
-        movieDetailController.title = movie?.title
+        movieDetailController.title = movie.title
         self.present(movieDetailController, animated: true)
     }
 }

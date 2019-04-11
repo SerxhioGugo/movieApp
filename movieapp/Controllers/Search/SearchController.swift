@@ -152,10 +152,9 @@ extension SearchController: UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let movie = searchResult[indexPath.item]
-        let movieDetailController = MovieDetailController()
+        let movieDetailController = MovieDetailController(movieId: movie.id)
 //        movieDetailController.modalPresentationStyle = .overCurrentContext
 //        movieDetailController.modalTransitionStyle = .crossDissolve
-        movieDetailController.movieId = movie.id
         present(movieDetailController, animated: true)
         
     }

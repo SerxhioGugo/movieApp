@@ -14,5 +14,5 @@ struct Search: Decodable {
 
 struct SearchResult: Decodable {
     let posterPath: String?
-    let id: Int?
+    let id: Int
 }

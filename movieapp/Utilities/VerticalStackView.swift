@@ -13,6 +13,7 @@ class VerticalStackView: UIStackView {
         super.init(frame: .zero)
         self.spacing = spacing
         self.axis = .vertical
+//        self.distribution = .fillEqually
         arrangedSubviews.forEach({addArrangedSubview($0)})
     }
     

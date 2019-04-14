@@ -16,7 +16,7 @@ class NowPlayingCell: UICollectionViewCell {
             guard
                 let result = dataSource as? MovieResults,
                 let wallpaper = result.backdropPath,
-                let wallpaperUrl = URL(string: "https://image.tmdb.org/t/p/w500\(wallpaper)"),
+                let wallpaperUrl = URL(string: "https://image.tmdb.org/t/p/original\(wallpaper)"),
                 let title = result.title,
                 let release = result.releaseDate
                 else { return }
@@ -41,7 +41,7 @@ class NowPlayingCell: UICollectionViewCell {
       let label = UILabel()
         label.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         label.textColor = .white
-        label.font = .boldSystemFont(ofSize: 16)
+        label.font = UIFont(name: Fonts.latoMedium, size: 16)
         label.adjustsFontSizeToFitWidth = true
         label.textAlignment = .left
         label.numberOfLines = 1

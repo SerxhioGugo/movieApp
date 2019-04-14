@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		62219E392247077600493680 /* SnappingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62219E382247077600493680 /* SnappingLayout.swift */; };
 		62219E3B2247192700493680 /* HomeFeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62219E3A2247192700493680 /* HomeFeedHeader.swift */; };
+		62466BF1226156C000B7A816 /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62466BF0226156C000B7A816 /* VideoCell.swift */; };
+		62466BF3226158DB00B7A816 /* TrailerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62466BF2226158DB00B7A816 /* TrailerController.swift */; };
+		62466BF522615A7C00B7A816 /* TrailerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62466BF422615A7C00B7A816 /* TrailerCell.swift */; };
 		6273742C225701F700F3B123 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6273742B225701F700F3B123 /* Lato-Bold.ttf */; };
 		627374332257027300F3B123 /* Lato-Heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6273742D2257027300F3B123 /* Lato-Heavy.ttf */; };
 		627374342257027300F3B123 /* Lato-Hairline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6273742E2257027300F3B123 /* Lato-Hairline.ttf */; };
@@ -58,6 +61,9 @@
 		18BB7F87FD98FBE1DFE7A6AE /* Pods-movieapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-movieapp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-movieapp/Pods-movieapp.debug.xcconfig"; sourceTree = "<group>"; };
 		62219E382247077600493680 /* SnappingLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnappingLayout.swift; sourceTree = "<group>"; };
 		62219E3A2247192700493680 /* HomeFeedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeedHeader.swift; sourceTree = "<group>"; };
+		62466BF0226156C000B7A816 /* VideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
+		62466BF2226158DB00B7A816 /* TrailerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerController.swift; sourceTree = "<group>"; };
+		62466BF422615A7C00B7A816 /* TrailerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerCell.swift; sourceTree = "<group>"; };
 		6273742B225701F700F3B123 /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
 		6273742D2257027300F3B123 /* Lato-Heavy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Heavy.ttf"; sourceTree = "<group>"; };
 		6273742E2257027300F3B123 /* Lato-Hairline.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Hairline.ttf"; sourceTree = "<group>"; };
@@ -287,6 +293,8 @@
 				62E2BECF2251D29E000DF8B9 /* MovieDetailCell.swift */,
 				62F1C6C1225EBFF5005CA1A3 /* CreditsCell.swift */,
 				62F1C6C6225ECD41005CA1A3 /* CastCell.swift */,
+				62466BF0226156C000B7A816 /* VideoCell.swift */,
+				62466BF422615A7C00B7A816 /* TrailerCell.swift */,
 			);
 			path = MovieDetailCell;
 			sourceTree = "<group>";
@@ -304,6 +312,7 @@
 			children = (
 				62E2BEC92251B300000DF8B9 /* MovieDetailController.swift */,
 				62F1C6C4225EC2FB005CA1A3 /* CreditsController.swift */,
+				62466BF2226158DB00B7A816 /* TrailerController.swift */,
 			);
 			path = DetailControllers;
 			sourceTree = "<group>";
@@ -448,6 +457,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62466BF3226158DB00B7A816 /* TrailerController.swift in Sources */,
 				62D44AED2239E54F004DD6CC /* HomeCell.swift in Sources */,
 				62E2BECA2251B300000DF8B9 /* MovieDetailController.swift in Sources */,
 				62A82D4C225A5FF70018270D /* FontsConstant.swift in Sources */,
@@ -464,6 +474,7 @@
 				62AB909922374E2400EF365D /* MovieGroup.swift in Sources */,
 				629749F322360DC50007D346 /* CreateTabBarExt.swift in Sources */,
 				62974A04223610BC0007D346 /* MainTabBarController.swift in Sources */,
+				62466BF522615A7C00B7A816 /* TrailerCell.swift in Sources */,
 				629749EF22360D130007D346 /* Secrets.swift in Sources */,
 				62F1C6C2225EBFF5005CA1A3 /* CreditsCell.swift in Sources */,
 				629749DD22360CD90007D346 /* AppDelegate.swift in Sources */,
@@ -477,6 +488,7 @@
 				629749FE22360F980007D346 /* SearchController.swift in Sources */,
 				629749F722360EA70007D346 /* UIColorExtension.swift in Sources */,
 				62974A0222360FBE0007D346 /* AboutController.swift in Sources */,
+				62466BF1226156C000B7A816 /* VideoCell.swift in Sources */,
 				62E2BECC2251CC0B000DF8B9 /* MovieDetail.swift in Sources */,
 				62F1C6C5225EC2FB005CA1A3 /* CreditsController.swift in Sources */,
 				62C371042252BA5D00071256 /* VerticalStackView.swift in Sources */,

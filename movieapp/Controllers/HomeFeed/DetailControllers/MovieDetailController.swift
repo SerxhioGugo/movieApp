@@ -13,6 +13,7 @@ class MovieDetailController: BaseListController {
     
     fileprivate let movieDetailId = "movieDetailId"
     fileprivate let creditsId = "creditsId"
+    fileprivate let videoId = "videoId"
     var movieDetails: MovieDetail?
     
     fileprivate let movieId: Int
@@ -80,6 +81,7 @@ class MovieDetailController: BaseListController {
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.register(MovieDetailCell.self, forCellWithReuseIdentifier: movieDetailId)
         collectionView.register(CreditsCell.self, forCellWithReuseIdentifier: creditsId)
+        collectionView.register(VideoCell.self, forCellWithReuseIdentifier: videoId)
     }
     
     fileprivate func fetchData() {
@@ -104,7 +106,7 @@ class MovieDetailController: BaseListController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return 3
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -119,6 +121,12 @@ class MovieDetailController: BaseListController {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: creditsId, for: indexPath) as! CreditsCell
             cell.creditsController.movieDetail = self.movieDetails
             cell.creditsController.collectionView.reloadData()
+            return cell
+            
+        case 2:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: videoId, for: indexPath) as! VideoCell
+            cell.trailerController.movieDetail = self.movieDetails
+            cell.trailerController.collectionView.reloadData()
             return cell
             
         default:
@@ -146,6 +154,9 @@ extension MovieDetailController: UICollectionViewDelegateFlowLayout {
             return .init(width: view.frame.width, height: estimatedSize.height)
         case 1:
             return .init(width: view.frame.width, height: view.frame.height / 3.2)
+            
+        case 2:
+            return .init(width: view.frame.width, height: view.frame.height / 4.2)
         default:
             return CGSize(width: 0, height: 0)
         }

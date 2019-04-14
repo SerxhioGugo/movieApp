@@ -37,7 +37,7 @@ class CastCell: UICollectionViewCell {
             actorName,
             characterName
             ])
-        
+        stackView.distribution = .fillEqually
         addSubview(stackView)
         stackView.anchor(top: actorImageView.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 20, right: 0))
         

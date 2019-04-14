@@ -29,8 +29,9 @@ Copyright © 2019 | Serxhio Gugo
 + Saving movies to Watch Later Tab
 + Push Notifications for New Movies
 
-## Screenshot
-<img src="https://i.postimg.cc/fLvYvTxx/IMG-289-C726-BEAEF-1.jpg" alt="drawing" width="250"/> <img src="https://i.postimg.cc/XNcs2nV1/IMG-3585.png" alt="drawing" width="250"/> <img src="https://i.postimg.cc/bwBPsQWn/IMG-E8-E334-DA9098-1.jpg" alt="drawing" width="250"/>
+## Screenshots
+<img src="https://i.postimg.cc/fLvYvTxx/IMG-289-C726-BEAEF-1.jpg" alt="drawing" width="250"/> <img src="https://i.postimg.cc/XNcs2nV1/IMG-3585.png" alt="drawing" width="250"/> <img src="https://media.giphy.com/media/dBlqg4dCY4qiVP1k9M/giphy.gif" alt="drawing" width="250"/> <img src="https://i.postimg.cc/bwBPsQWn/IMG-E8-E334-DA9098-1.jpg" alt="drawing" width="250"/> 
+
 
 
 

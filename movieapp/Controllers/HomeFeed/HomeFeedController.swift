@@ -24,6 +24,7 @@ class HomeFeedController: BaseListController {
         return refresh
     }()
     
+    
     var movieGroup: MovieGroup?
     var nowPlaying: MovieGroup?
 
@@ -35,6 +36,15 @@ class HomeFeedController: BaseListController {
         setupCollectionView()
         
         fetchData()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "aboutSelected"), style: .plain, target: self, action: #selector(handleShowGenre))
+    }
+    
+    @objc func handleShowGenre() {
+        let genreListController = GenreListController()
+        genreListController.modalTransitionStyle = .crossDissolve
+        genreListController.modalPresentationStyle = .fullScreen
+        self.present(genreListController, animated: true)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

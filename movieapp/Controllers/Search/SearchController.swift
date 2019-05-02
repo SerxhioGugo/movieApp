@@ -88,6 +88,10 @@ class SearchController: BaseListController, UISearchBarDelegate {
             }
         })
     }
+    
+    deinit {
+        timer?.invalidate()
+    }
 //    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
 //        DispatchQueue.main.async {
 //            self.searchResult.removeAll()

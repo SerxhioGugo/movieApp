@@ -13,6 +13,8 @@ class HomeFeedController: BaseListController {
     fileprivate let cellId = "cellId"
     fileprivate let headerId = "headerId"
     fileprivate let footerId = "footerId"
+    fileprivate let genreCellId = "genreCellId"
+    fileprivate let nowPlayingCellId = "nowPlayingCellId"
     fileprivate var isPaginating: Bool = false
     fileprivate var isDonePaginating: Bool = false
     fileprivate var counter: Int = 1
@@ -27,6 +29,7 @@ class HomeFeedController: BaseListController {
     
     var movieGroup: MovieGroup?
     var nowPlaying: MovieGroup?
+    var movie: Movie?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,17 +37,8 @@ class HomeFeedController: BaseListController {
         setupNavController()
         setupLayout()
         setupCollectionView()
-        
         fetchData()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "aboutSelected"), style: .plain, target: self, action: #selector(handleShowGenre))
-    }
-    
-    @objc func handleShowGenre() {
-        let genreListController = GenreListController()
-        genreListController.modalTransitionStyle = .crossDissolve
-        genreListController.modalPresentationStyle = .fullScreen
-        self.present(genreListController, animated: true)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -56,9 +50,17 @@ class HomeFeedController: BaseListController {
         self.setNeedsStatusBarAppearanceUpdate()
     }
     
+    //FIXME: Move Genres Networking , Here!
     func fetchData() {
         
         let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
+        APIClient.shared.fetchGenres { (movieGenre, error) in
+            dispatchGroup.leave()
+            guard let result = movieGenre else { return }
+            self.movie = result
+        }
         
         dispatchGroup.enter()
         APIClient.shared.fetchUpcomingMovies { (movieGroup, error) in
@@ -92,7 +94,8 @@ class HomeFeedController: BaseListController {
     fileprivate func setupCollectionView() {
         collectionView.refreshControl = self.refresher
         collectionView.register(HomeCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView.register(HomeFeedHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
+        collectionView.register(GenreContainerCell.self, forCellWithReuseIdentifier: genreCellId)
+        collectionView.register(NowPlayingCellContainer.self, forCellWithReuseIdentifier: nowPlayingCellId)
         collectionView.register(HomeFeedLoadingFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: footerId)
         collectionView.backgroundColor = .myBlack
         collectionView.allowsSelection = true
@@ -104,6 +107,12 @@ class HomeFeedController: BaseListController {
         navigationController?.navigationBar.barTintColor = UIColor.blueDark3
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationBar.isTranslucent = true
+        navigationItem.title = "Genres"
+//        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 30))
+//        imageView.contentMode = .scaleAspectFit
+//        let image = #imageLiteral(resourceName: "movieSelected")
+//        imageView.image = image
+//        navigationItem.titleView = imageView
         let attributes = [NSAttributedString.Key.foregroundColor : UIColor.sunnyOrange]
         navigationController?.navigationBar.largeTitleTextAttributes = attributes
         navigationController?.navigationBar.titleTextAttributes = attributes
@@ -120,28 +129,13 @@ class HomeFeedController: BaseListController {
 extension HomeFeedController {
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if kind ==  UICollectionView.elementKindSectionHeader {
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! HomeFeedHeader
-            header.nowPlayingController.nowPlaying = self.nowPlaying
-            header.nowPlayingController.collectionView.reloadData()
-            
-            header.nowPlayingController.didSelectHandler = { [weak self] movieResults in
-                let movieDetailController = MovieDetailController(movieId: movieResults.id)
-                movieDetailController.navigationItem.title = movieResults.title
-            self!.present(movieDetailController, animated: true)
-            }
-            
-            return header
-        } else if kind == UICollectionView.elementKindSectionFooter {
+        if kind == UICollectionView.elementKindSectionFooter {
             let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: footerId, for: indexPath)
             return footer
         }
         return UICollectionReusableView()
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return .init(width: view.frame.width, height: (view.frame.height / 3.1))
-    }
+
 }
 
 //MARK: Footer
@@ -149,6 +143,9 @@ extension HomeFeedController {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         //If you're at the end of pagination footer size set to 0
+        if section == 0 || section == 1{
+            return CGSize.zero
+        }
         let height: CGFloat = isDonePaginating ? 0 : 100
         return .init(width: view.frame.width, height: height)
     }
@@ -156,50 +153,83 @@ extension HomeFeedController {
 
 //MARK: CollectionView
 extension HomeFeedController: UICollectionViewDelegateFlowLayout {
-    
+
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 3
+    }
+
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if section == 2 {
         return movieGroup?.results.count ?? 0
+        } else if section == 1 {
+            return 1
+        }
+        return 1
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeCell
-        let movie = movieGroup?.results[indexPath.item]
-        cell.imageDataSource = movie
         
-        if indexPath.item == (movieGroup?.results.count ?? 0) - 1 && !isPaginating {
+        if indexPath.section == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: genreCellId, for: indexPath) as! GenreContainerCell
+            cell.genreController.movie = movie
+            cell.genreController.collectionView.reloadData()
+            return cell
+        } else if indexPath.section == 1 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: nowPlayingCellId, for: indexPath) as! NowPlayingCellContainer
+            cell.nowPlayingController.nowPlaying = nowPlaying
+            cell.nowPlayingController.collectionView.reloadData()
+            return cell
+        } else if indexPath.section == 2 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeCell
+            let movie = movieGroup?.results[indexPath.item]
+            cell.imageDataSource = movie
             
-            isPaginating = true
-            counter += 1
-            
-            let jsonUrl = "https://api.themoviedb.org/3/movie/popular?api_key=acb5063b86a8efb1ba814b6ad605f578&page=\(counter)"
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-                APIClient.shared.fetchGenericJSONData(urlString: jsonUrl) { (request: MovieGroup?, error) in
-                    if let error = error {
-                        print("Error paginating data: ", error)
-                        return
+            if indexPath.item == (movieGroup?.results.count ?? 0) - 1 && !isPaginating {
+                
+                isPaginating = true
+                counter += 1
+                
+                let jsonUrl = "https://api.themoviedb.org/3/movie/popular?api_key=acb5063b86a8efb1ba814b6ad605f578&page=\(counter)"
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                    APIClient.shared.fetchGenericJSONData(urlString: jsonUrl) { (request: MovieGroup?, error) in
+                        if let error = error {
+                            print("Error paginating data: ", error)
+                            return
+                        }
+                        
+                        if request?.results.count == 0 {
+                            self.isDonePaginating = true
+                        }
+                        
+                        guard let result = request?.results else { return }
+                        self.movieGroup?.results += result
+                        DispatchQueue.main.async {
+                            self.collectionView.reloadData()
+                        }
+                        
+                        self.isPaginating = false
                     }
-                    
-                    if request?.results.count == 0 {
-                        self.isDonePaginating = true
-                    }
-                    
-                    guard let result = request?.results else { return }
-                    self.movieGroup?.results += result
-                    DispatchQueue.main.async {
-                        self.collectionView.reloadData()
-                    }
-                    
-                    self.isPaginating = false
                 }
+                
             }
-            
+            return cell
         }
-        return cell
+        
+        return UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if indexPath.section == 0 {
+            return .init(width: view.frame.width - 10, height: 50)
+        } else if indexPath.section == 1 {
+            
+            return .init(width: view.frame.width - 10, height: 450)
+            
+        }
+        
         return .init(width: (view.frame.width / 3) - 8, height: view.frame.height / 4.5)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -211,15 +241,30 @@ extension HomeFeedController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        if section == 0 || section == 1 {
+            return .init(top: 3, left: 0, bottom: 3, right: 0)
+        }
         return .init(top: 5, left: 5, bottom: 5, right: 5)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let movie = movieGroup?.results[indexPath.item] else { return }
-        let movieDetailController = MovieDetailController(movieId: movie.id)
-        movieDetailController.modalPresentationStyle = .overFullScreen
-        movieDetailController.modalTransitionStyle = .crossDissolve
-        movieDetailController.title = movie.title
-        self.present(movieDetailController, animated: true)
+        
+        switch indexPath.section {
+        case 0:
+            print("Genres index: \(indexPath.item)")
+        case 1:
+            print(indexPath.item)
+        case 2:
+            let movieDetailController = MovieDetailController(movieId: movie.id)
+            movieDetailController.modalPresentationStyle = .overFullScreen
+            movieDetailController.modalTransitionStyle = .crossDissolve
+            movieDetailController.title = movie.title
+            self.present(movieDetailController, animated: true)
+        default:
+            print("none")
+        }
+        
+
     }
 }

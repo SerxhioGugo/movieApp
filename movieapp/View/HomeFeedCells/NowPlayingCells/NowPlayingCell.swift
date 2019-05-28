@@ -15,7 +15,7 @@ class NowPlayingCell: UICollectionViewCell {
         didSet {
             guard
                 let result = dataSource as? MovieResults,
-                let wallpaper = result.backdropPath,
+                let wallpaper = result.posterPath,
                 let wallpaperUrl = URL(string: "https://image.tmdb.org/t/p/original\(wallpaper)"),
                 let title = result.title,
                 let release = result.releaseDate
@@ -33,7 +33,10 @@ class NowPlayingCell: UICollectionViewCell {
         let image = UIImageView()
         image.image = #imageLiteral(resourceName: "imageNotFound")
         image.contentMode = .scaleAspectFill
-        image.layer.masksToBounds = true
+        image.layer.cornerRadius = 12
+        image.clipsToBounds = true
+        image.layer.borderWidth = 0.3
+        image.layer.borderColor = UIColor.darkGray.cgColor
         return image
     }()
     

@@ -44,8 +44,12 @@ extension GenreListController: UICollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let genre = movie?.genres[indexPath.item]
-        print(genre?.id)
+        guard let genre = movie?.genres[indexPath.item] else { return }
+        let genreController = GenreController(genreId: genre.id!)
+        genreController.genreLabel.text = "   \(genre.name!)"
+        genreController.modalPresentationStyle = .overFullScreen
+        genreController.modalTransitionStyle = .crossDissolve
+        self.present(genreController, animated: true)
         
     }
     

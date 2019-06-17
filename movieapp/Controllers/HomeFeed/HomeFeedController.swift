@@ -18,6 +18,7 @@ class HomeFeedController: BaseListController {
     fileprivate var isPaginating: Bool = false
     fileprivate var isDonePaginating: Bool = false
     fileprivate var counter: Int = 1
+    fileprivate var didComeFromAnotherViewController = false
     
     lazy var refresher: UIRefreshControl = {
         let refresh = UIRefreshControl()
@@ -41,13 +42,19 @@ class HomeFeedController: BaseListController {
         
     }
     
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+//        super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()
+        self.tabBarController?.delegate = self
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        didComeFromAnotherViewController = true
     }
     
     //FIXME: Move Genres Networking , Here!
@@ -221,7 +228,7 @@ extension HomeFeedController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.section == 0 {
-            return .init(width: view.frame.width - 10, height: 50)
+            return .init(width: view.frame.width - 10, height: 100)
         } else if indexPath.section == 1 {
             
             return .init(width: view.frame.width - 10, height: 450)
@@ -248,23 +255,34 @@ extension HomeFeedController: UICollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let movie = movieGroup?.results[indexPath.item] else { return }
+        guard let movieGroup = movieGroup?.results[indexPath.item] else { return }
         
         switch indexPath.section {
-        case 0:
-            print("Genres index: \(indexPath.item)")
-        case 1:
-            print(indexPath.item)
+            
         case 2:
-            let movieDetailController = MovieDetailController(movieId: movie.id)
+            let movieDetailController = MovieDetailController(movieId: movieGroup.id)
             movieDetailController.modalPresentationStyle = .overFullScreen
             movieDetailController.modalTransitionStyle = .crossDissolve
-            movieDetailController.title = movie.title
+            movieDetailController.title = movieGroup.title
             self.present(movieDetailController, animated: true)
         default:
             print("none")
         }
         
 
+    }
+}
+
+extension HomeFeedController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        
+        if !didComeFromAnotherViewController {
+            self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            
+        } else {
+            
+            didComeFromAnotherViewController = false
+        }
+        
     }
 }

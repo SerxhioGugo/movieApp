@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		620BE9F522B72C7A000D147D /* MovieGenreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620BE9F422B72C7A000D147D /* MovieGenreCell.swift */; };
 		62219E392247077600493680 /* SnappingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62219E382247077600493680 /* SnappingLayout.swift */; };
 		62219E3B2247192700493680 /* HomeFeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62219E3A2247192700493680 /* HomeFeedHeader.swift */; };
 		6224D3572295BD6600BB2618 /* UPCarouselFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6224D3562295BD6600BB2618 /* UPCarouselFlowLayout.swift */; };
@@ -16,6 +17,7 @@
 		625CEF52228B41E600022D77 /* GenreContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625CEF51228B41E600022D77 /* GenreContainerCell.swift */; };
 		625CEF54228B49A200022D77 /* FadeAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625CEF53228B49A200022D77 /* FadeAnimation.swift */; };
 		625CEF57228B4F6600022D77 /* NowPlayingCellContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625CEF56228B4F6600022D77 /* NowPlayingCellContainer.swift */; };
+		62731E6B22B2DB12004D288F /* GenreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62731E6A22B2DB12004D288F /* GenreController.swift */; };
 		6273742C225701F700F3B123 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6273742B225701F700F3B123 /* Lato-Bold.ttf */; };
 		627374332257027300F3B123 /* Lato-Heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6273742D2257027300F3B123 /* Lato-Heavy.ttf */; };
 		627374342257027300F3B123 /* Lato-Hairline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6273742E2257027300F3B123 /* Lato-Hairline.ttf */; };
@@ -66,6 +68,7 @@
 
 /* Begin PBXFileReference section */
 		18BB7F87FD98FBE1DFE7A6AE /* Pods-movieapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-movieapp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-movieapp/Pods-movieapp.debug.xcconfig"; sourceTree = "<group>"; };
+		620BE9F422B72C7A000D147D /* MovieGenreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieGenreCell.swift; sourceTree = "<group>"; };
 		62219E382247077600493680 /* SnappingLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnappingLayout.swift; sourceTree = "<group>"; };
 		62219E3A2247192700493680 /* HomeFeedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeedHeader.swift; sourceTree = "<group>"; };
 		6224D3562295BD6600BB2618 /* UPCarouselFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPCarouselFlowLayout.swift; sourceTree = "<group>"; };
@@ -75,6 +78,7 @@
 		625CEF51228B41E600022D77 /* GenreContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreContainerCell.swift; sourceTree = "<group>"; };
 		625CEF53228B49A200022D77 /* FadeAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeAnimation.swift; sourceTree = "<group>"; };
 		625CEF56228B4F6600022D77 /* NowPlayingCellContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingCellContainer.swift; sourceTree = "<group>"; };
+		62731E6A22B2DB12004D288F /* GenreController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreController.swift; sourceTree = "<group>"; };
 		6273742B225701F700F3B123 /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
 		6273742D2257027300F3B123 /* Lato-Heavy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Heavy.ttf"; sourceTree = "<group>"; };
 		6273742E2257027300F3B123 /* Lato-Hairline.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Hairline.ttf"; sourceTree = "<group>"; };
@@ -143,6 +147,7 @@
 			children = (
 				625CEF51228B41E600022D77 /* GenreContainerCell.swift */,
 				62C03921227AA894004700C6 /* GenreCell.swift */,
+				620BE9F422B72C7A000D147D /* MovieGenreCell.swift */,
 			);
 			path = GenreCells;
 			sourceTree = "<group>";
@@ -350,6 +355,7 @@
 				62E2BEC92251B300000DF8B9 /* MovieDetailController.swift */,
 				62F1C6C4225EC2FB005CA1A3 /* CreditsController.swift */,
 				62466BF2226158DB00B7A816 /* TrailerController.swift */,
+				62731E6A22B2DB12004D288F /* GenreController.swift */,
 			);
 			path = DetailControllers;
 			sourceTree = "<group>";
@@ -498,6 +504,7 @@
 				62D44AED2239E54F004DD6CC /* HomeCell.swift in Sources */,
 				62E2BECA2251B300000DF8B9 /* MovieDetailController.swift in Sources */,
 				625CEF52228B41E600022D77 /* GenreContainerCell.swift in Sources */,
+				620BE9F522B72C7A000D147D /* MovieGenreCell.swift in Sources */,
 				6224D3572295BD6600BB2618 /* UPCarouselFlowLayout.swift in Sources */,
 				62C03922227AA894004700C6 /* GenreCell.swift in Sources */,
 				62A82D4C225A5FF70018270D /* FontsConstant.swift in Sources */,
@@ -517,6 +524,7 @@
 				62974A04223610BC0007D346 /* MainTabBarController.swift in Sources */,
 				62466BF522615A7C00B7A816 /* TrailerCell.swift in Sources */,
 				629749EF22360D130007D346 /* Secrets.swift in Sources */,
+				62731E6B22B2DB12004D288F /* GenreController.swift in Sources */,
 				62F1C6C2225EBFF5005CA1A3 /* CreditsCell.swift in Sources */,
 				629749DD22360CD90007D346 /* AppDelegate.swift in Sources */,
 				62C0391E227AA691004700C6 /* GenreListController.swift in Sources */,

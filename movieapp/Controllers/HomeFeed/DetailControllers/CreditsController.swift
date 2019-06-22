@@ -54,4 +54,11 @@ extension CreditsController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return .init(top: 0, left: 20, bottom: 0, right: 20)
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let yellowVc = UIViewController()
+        yellowVc.view.backgroundColor = .yellow
+        yellowVc.title = cast[indexPath.item].name!
+        self.present(yellowVc, animated: true)
+    }
 }

@@ -9,4 +9,6 @@ target 'movieapp' do
 pod 'SDWebImage'
 pod 'CHIPageControl', '~> 0.1.3'
 pod 'Cosmos', '~> 18.0'
+pod 'PullToDismiss', '~> 2.2'
+#pod 'Hero'
 end

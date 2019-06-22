@@ -10,6 +10,7 @@ import UIKit
 import SDWebImage
 import Cosmos
 
+
 class MovieDetailCell: UICollectionViewCell {
 
     var dataSource: Any? {
@@ -74,6 +75,7 @@ class MovieDetailCell: UICollectionViewCell {
         img.translatesAutoresizingMaskIntoConstraints = false
         img.alpha = 0
         img.dropShadow()
+        
         return img
     }()
     

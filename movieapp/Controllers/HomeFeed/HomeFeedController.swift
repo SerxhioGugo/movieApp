@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class HomeFeedController: BaseListController {
     
     fileprivate let cellId = "cellId"
@@ -34,7 +35,6 @@ class HomeFeedController: BaseListController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupNavController()
         setupLayout()
         setupCollectionView()

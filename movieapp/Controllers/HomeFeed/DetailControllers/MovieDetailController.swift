@@ -8,9 +8,12 @@
 
 import UIKit
 import SDWebImage
+import PullToDismiss
+
 
 class MovieDetailController: BaseListController {
     
+    private var pullToDismiss: PullToDismiss?
     fileprivate let movieDetailId = "movieDetailId"
     fileprivate let creditsId = "creditsId"
     fileprivate let videoId = "videoId"
@@ -54,6 +57,9 @@ class MovieDetailController: BaseListController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        pullToDismiss = PullToDismiss(scrollView: collectionView)
+        pullToDismiss?.delegate = self
+
         view.addSubview(aiv)
         aiv.fillSuperview()
         

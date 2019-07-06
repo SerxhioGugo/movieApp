@@ -22,17 +22,18 @@ class SearchController: BaseListController, UISearchBarDelegate {
         label.font = UIFont(name: Fonts.latoBold, size: 20)
         label.numberOfLines = 0
         label.textColor = UIColor.sunnyOrange
+        label.backgroundColor = .blueDark3
         return label
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView.backgroundColor = UIColor.blueDark3
+        collectionView.backgroundColor = UIColor.myBlack
         collectionView.register(SearchCell.self, forCellWithReuseIdentifier: cellId)
         
         view.addSubview(enterSearchTermLabel)
-        enterSearchTermLabel.centerInSuperview()
+        enterSearchTermLabel.fillSuperview()
         
         setupSearchBar()
         setupNavController()

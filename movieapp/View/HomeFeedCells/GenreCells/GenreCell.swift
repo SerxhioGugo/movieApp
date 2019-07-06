@@ -21,8 +21,8 @@ class GenreCell: UICollectionViewCell {
         label.font = UIFont(name: Fonts.latoMedium, size: 18)
         label.adjustsFontSizeToFitWidth = true
         label.numberOfLines = 2
-        label.layer.borderWidth = 2
-        label.layer.borderColor = UIColor.white.cgColor
+//        label.layer.borderWidth = 2
+//        label.layer.borderColor = UIColor.white.cgColor
         return label
     }()
     

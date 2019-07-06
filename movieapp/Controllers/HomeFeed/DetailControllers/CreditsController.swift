@@ -56,9 +56,7 @@ extension CreditsController: UICollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let yellowVc = UIViewController()
-        yellowVc.view.backgroundColor = .yellow
-        yellowVc.title = cast[indexPath.item].name!
-        self.present(yellowVc, animated: true)
+        print(cast[indexPath.item].id)
+        
     }
 }

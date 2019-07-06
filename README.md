@@ -30,7 +30,7 @@ Copyright © 2019 | Serxhio Gugo
 + Push Notifications for New Movies
 
 ## Screenshots
-<img src="https://i.postimg.cc/fLvYvTxx/IMG-289-C726-BEAEF-1.jpg" alt="drawing" width="250"/> <img src="https://i.postimg.cc/XNcs2nV1/IMG-3585.png" alt="drawing" width="250"/> <img src="https://media.giphy.com/media/dBlqg4dCY4qiVP1k9M/giphy.gif" alt="drawing" width="250"/> <img src="https://i.postimg.cc/bwBPsQWn/IMG-E8-E334-DA9098-1.jpg" alt="drawing" width="250"/> 
+<img src="https://i.postimg.cc/qB6Pt9DQ/movieimg.jpg" alt="drawing" width="250"/> <img src="https://i.postimg.cc/VvzX8yJ1/movieimg2.jpg" width="250"/> <img src="https://media.giphy.com/media/dBlqg4dCY4qiVP1k9M/giphy.gif" alt="drawing" width="250"/> <img src="https://i.postimg.cc/bwBPsQWn/IMG-E8-E334-DA9098-1.jpg" alt="drawing" width="250"/> 
 
 
 

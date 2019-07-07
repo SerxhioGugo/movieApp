@@ -43,6 +43,7 @@
 		62974A0A22361B990007D346 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62974A0922361B990007D346 /* Search.swift */; };
 		62974A0C223624FC0007D346 /* BaseListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62974A0B223624FC0007D346 /* BaseListController.swift */; };
 		62974A0F22362B1C0007D346 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62974A0E22362B1C0007D346 /* SearchCell.swift */; };
+		629EFC1122D17F1F00E9E097 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629EFC1022D17F1F00E9E097 /* CustomTextField.swift */; };
 		62A82D4C225A5FF70018270D /* FontsConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A82D4B225A5FF70018270D /* FontsConstant.swift */; };
 		62A88AFC2241CE9700212D32 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A88AFB2241CE9700212D32 /* MovieCell.swift */; };
 		62A88AFE2241D64500212D32 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A88AFD2241D64500212D32 /* APIClient.swift */; };
@@ -107,6 +108,7 @@
 		62974A0922361B990007D346 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		62974A0B223624FC0007D346 /* BaseListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseListController.swift; sourceTree = "<group>"; };
 		62974A0E22362B1C0007D346 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
+		629EFC1022D17F1F00E9E097 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		62A82D4B225A5FF70018270D /* FontsConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontsConstant.swift; sourceTree = "<group>"; };
 		62A88AFB2241CE9700212D32 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 		62A88AFD2241D64500212D32 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 				62A82D4B225A5FF70018270D /* FontsConstant.swift */,
 				625CEF53228B49A200022D77 /* FadeAnimation.swift */,
 				6224D3562295BD6600BB2618 /* UPCarouselFlowLayout.swift */,
+				629EFC1022D17F1F00E9E097 /* CustomTextField.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -541,6 +544,7 @@
 				62E2BED02251D29E000DF8B9 /* MovieDetailCell.swift in Sources */,
 				629749F922360ED60007D346 /* AddShadow.swift in Sources */,
 				62974A0C223624FC0007D346 /* BaseListController.swift in Sources */,
+				629EFC1122D17F1F00E9E097 /* CustomTextField.swift in Sources */,
 				629749FE22360F980007D346 /* SearchController.swift in Sources */,
 				629749F722360EA70007D346 /* UIColorExtension.swift in Sources */,
 				62974A0222360FBE0007D346 /* AboutController.swift in Sources */,

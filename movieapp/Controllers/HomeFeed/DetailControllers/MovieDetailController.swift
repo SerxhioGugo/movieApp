@@ -14,6 +14,7 @@ import PullToDismiss
 class MovieDetailController: BaseListController {
     
     private var pullToDismiss: PullToDismiss?
+
     fileprivate let movieDetailId = "movieDetailId"
     fileprivate let creditsId = "creditsId"
     fileprivate let videoId = "videoId"
@@ -41,7 +42,7 @@ class MovieDetailController: BaseListController {
     
     
     let dismissButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.setTitle("X", for: .normal)
         button.backgroundColor = UIColor.lightGray.withAlphaComponent(0.50)
         button.titleLabel?.textColor = .black

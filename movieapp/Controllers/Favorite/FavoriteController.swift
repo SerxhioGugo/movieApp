@@ -56,7 +56,7 @@ class FavoriteController: BaseListController {
     
     @objc func handleShowSignInPage() {
         let signInController = SignInController()
-        self.navigationController?.pushViewController(signInController, animated: true)
+        self.present(signInController, animated: true)
     }
     
     

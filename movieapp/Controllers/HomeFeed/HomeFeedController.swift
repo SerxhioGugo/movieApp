@@ -115,11 +115,11 @@ class HomeFeedController: BaseListController {
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationBar.isTranslucent = true
         navigationItem.title = "Genres"
-//        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 30))
-//        imageView.contentMode = .scaleAspectFit
-//        let image = #imageLiteral(resourceName: "movieSelected")
-//        imageView.image = image
-//        navigationItem.titleView = imageView
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 30))
+        imageView.contentMode = .scaleAspectFit
+        let image = #imageLiteral(resourceName: "movieIcon")
+        imageView.image = image
+        navigationItem.titleView = imageView
         let attributes = [NSAttributedString.Key.foregroundColor : UIColor.sunnyOrange]
         navigationController?.navigationBar.largeTitleTextAttributes = attributes
         navigationController?.navigationBar.titleTextAttributes = attributes
@@ -228,7 +228,7 @@ extension HomeFeedController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.section == 0 {
-            return .init(width: view.frame.width - 10, height: 100)
+            return .init(width: view.frame.width - 10, height: 120)
         } else if indexPath.section == 1 {
             
             return .init(width: view.frame.width - 10, height: 450)

@@ -17,6 +17,7 @@
 		625CEF52228B41E600022D77 /* GenreContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625CEF51228B41E600022D77 /* GenreContainerCell.swift */; };
 		625CEF54228B49A200022D77 /* FadeAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625CEF53228B49A200022D77 /* FadeAnimation.swift */; };
 		625CEF57228B4F6600022D77 /* NowPlayingCellContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625CEF56228B4F6600022D77 /* NowPlayingCellContainer.swift */; };
+		626EFE0E22D42FE700A09E1F /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626EFE0D22D42FE700A09E1F /* SignUpController.swift */; };
 		62731E6B22B2DB12004D288F /* GenreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62731E6A22B2DB12004D288F /* GenreController.swift */; };
 		6273742C225701F700F3B123 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6273742B225701F700F3B123 /* Lato-Bold.ttf */; };
 		627374332257027300F3B123 /* Lato-Heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6273742D2257027300F3B123 /* Lato-Heavy.ttf */; };
@@ -80,6 +81,7 @@
 		625CEF51228B41E600022D77 /* GenreContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreContainerCell.swift; sourceTree = "<group>"; };
 		625CEF53228B49A200022D77 /* FadeAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeAnimation.swift; sourceTree = "<group>"; };
 		625CEF56228B4F6600022D77 /* NowPlayingCellContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingCellContainer.swift; sourceTree = "<group>"; };
+		626EFE0D22D42FE700A09E1F /* SignUpController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 		62731E6A22B2DB12004D288F /* GenreController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreController.swift; sourceTree = "<group>"; };
 		6273742B225701F700F3B123 /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
 		6273742D2257027300F3B123 /* Lato-Heavy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Heavy.ttf"; sourceTree = "<group>"; };
@@ -323,6 +325,7 @@
 			isa = PBXGroup;
 			children = (
 				62C7D14B22D048A10083413D /* SignInController.swift */,
+				626EFE0D22D42FE700A09E1F /* SignUpController.swift */,
 			);
 			path = Registration;
 			sourceTree = "<group>";
@@ -534,6 +537,7 @@
 				62466BF522615A7C00B7A816 /* TrailerCell.swift in Sources */,
 				629749EF22360D130007D346 /* Secrets.swift in Sources */,
 				62731E6B22B2DB12004D288F /* GenreController.swift in Sources */,
+				626EFE0E22D42FE700A09E1F /* SignUpController.swift in Sources */,
 				62F1C6C2225EBFF5005CA1A3 /* CreditsCell.swift in Sources */,
 				629749DD22360CD90007D346 /* AppDelegate.swift in Sources */,
 				62C0391E227AA691004700C6 /* GenreListController.swift in Sources */,

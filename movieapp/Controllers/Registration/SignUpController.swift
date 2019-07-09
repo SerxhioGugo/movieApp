@@ -1,18 +1,17 @@
 //
-//  SignInController.swift
+//  SignUpController.swift
 //  movieapp
 //
-//  Created by Serxhio Gugo on 7/5/19.
+//  Created by Serxhio Gugo on 7/8/19.
 //  Copyright © 2019 Serxhio Gugo. All rights reserved.
 //
 
 import UIKit
 
-class SignInController: UIViewController {
-    
+class SignUpController: UIViewController {
     
     let dismissButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.setTitle("X", for: .normal)
         button.backgroundColor = UIColor.lightGray.withAlphaComponent(0.50)
         button.titleLabel?.textColor = .black
@@ -30,19 +29,56 @@ class SignInController: UIViewController {
         return img
     }()
     
-    //    let selectPhotoButton: UIButton = {
-    //       let button = UIButton(type: .system)
-    //        button.setTitle("Select Photo", for: .normal)
-    //        button.titleLabel?.font = UIFont(name: Fonts.latoHeavy, size: 32)
-    //        button.backgroundColor = UIColor.blueDark3
-    //        button.setTitleColor(.sunnyOrange, for: .normal)
-    //        button.heightAnchor.constraint(equalToConstant: 275).isActive = true
-    //        button.layer.cornerRadius = 16
-    //        button.layer.shadowColor = UIColor.sunnyOrange.cgColor
-    //        button.layer.borderColor = UIColor.sunnyOrange.cgColor
-    //        button.layer.borderWidth = 2
-    //        return button
-    //    }()
+    let selectPhotoButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Select Photo", for: .normal)
+        button.titleLabel?.font = UIFont(name: Fonts.latoHeavy, size: 32)
+        button.backgroundColor = UIColor.blueDark3
+        button.setTitleColor(.sunnyOrange, for: .normal)
+        button.heightAnchor.constraint(equalToConstant: 275).isActive = true
+        button.layer.cornerRadius = 16
+        button.layer.shadowColor = UIColor.sunnyOrange.cgColor
+        button.layer.borderColor = UIColor.sunnyOrange.cgColor
+        button.layer.borderWidth = 2
+        return button
+    }()
+    
+    let nameTextField: UITextField = {
+        let tf = CustomTextField(padding: 16)
+        tf.tintColor = .sunnyOrange
+        tf.textColor = .sunnyOrange
+        tf.font = UIFont(name: Fonts.latoRegular, size: 20)
+        tf.attributedPlaceholder = NSAttributedString(string: "Enter full name", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        tf.backgroundColor = .myGrayColor
+        tf.keyboardAppearance = UIKeyboardAppearance.dark
+        tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
+        return tf
+    }()
+    
+    @objc fileprivate func handleTextChange(textField: UITextField) {
+        if textField == nameTextField {
+            print("full name changing")
+        } else if textField == emailTextField {
+            print("email changing")
+        } else if textField == passwordTextField  {
+            print("password changing")
+        }
+        
+        let isFormValid = nameTextField.text?.isEmpty == false &&
+            emailTextField.text?.isEmpty == false &&
+            passwordTextField.text?.isEmpty == false
+        
+        signUpButton.isEnabled = isFormValid
+        
+        if isFormValid {
+            signUpButton.backgroundColor = .sunnyOrange
+            signUpButton.setTitleColor(.white, for: .normal)
+        } else {
+            signUpButton.backgroundColor = .myGrayColor
+            signUpButton.setTitleColor(.lightGray, for: .normal)
+        }
+        
+    }
     
     let emailTextField: UITextField = {
         let tf = CustomTextField(padding: 16)
@@ -53,6 +89,7 @@ class SignInController: UIViewController {
         tf.backgroundColor = .myGrayColor
         tf.keyboardType = .emailAddress
         tf.keyboardAppearance = UIKeyboardAppearance.dark
+        tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return tf
     }()
     
@@ -65,45 +102,29 @@ class SignInController: UIViewController {
         tf.backgroundColor = .myGrayColor
         tf.isSecureTextEntry = true
         tf.keyboardAppearance = UIKeyboardAppearance.dark
+        tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return tf
-    }()
-    
-    let signInButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Sign in", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .sunnyOrange
-        button.layer.cornerRadius = 20
-        button.titleLabel?.font = UIFont(name: Fonts.latoBold, size: 24)
-        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        return button
     }()
     
     let signUpButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Don't have an account yet? Sign Up here.", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont(name: Fonts.latoRegular, size: 22)
-        button.titleLabel?.adjustsFontSizeToFitWidth = true
-        button.addTarget(self, action: #selector(goToSignUp), for: .touchUpInside)
+        button.setTitle("Sign Up", for: .normal)
+        button.setTitleColor(.lightGray, for: .normal)
+        button.backgroundColor = .myGrayColor
+        button.layer.cornerRadius = 20
+        button.titleLabel?.font = UIFont(name: Fonts.latoBold, size: 24)
+        button.isEnabled = false
+        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return button
     }()
     
-    let termsButton: UIButton = {
+    let signInButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Read Terms of Service", for: .normal)
+        button.setTitle("Back to Sign In", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont(name: Fonts.latoRegular, size: 16)
+        button.titleLabel?.font = UIFont(name: Fonts.latoRegular, size: 20)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
-        return button
-    }()
-    
-    let privacyButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Read Privacy Policy", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont(name: Fonts.latoRegular, size: 16)
-        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.addTarget(self, action: #selector(goToSignIn), for: .touchUpInside)
         return button
     }()
     
@@ -120,6 +141,8 @@ class SignInController: UIViewController {
     lazy var stackView = UIStackView(arrangedSubviews: [
         //selectPhotoButton,
         logoIcon,
+        selectPhotoButton,
+        nameTextField,
         emailTextField,
         passwordTextField,
         signInButton,
@@ -130,7 +153,6 @@ class SignInController: UIViewController {
     //MARK: Layout
     fileprivate func setupLayout() {
         
-
         view.addSubview(stackView)
         stackView.axis = .vertical
         stackView.spacing = 8
@@ -143,18 +165,6 @@ class SignInController: UIViewController {
         
         //        view.addSubview(logoIcon)
         //        logoIcon.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: stackView.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 32, bottom: 32, right: 32), size: .init(width: 0, height: 100))
-
-        
-        let bottomSectionStack = UIStackView(arrangedSubviews: [
-            termsButton,
-            privacyButton
-            ])
-        
-        bottomSectionStack.distribution = .fillEqually
-        bottomSectionStack.axis = .horizontal
-        
-        view.addSubview(bottomSectionStack)
-        bottomSectionStack.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, size: .init(width: 0, height: 80))
     }
     
     fileprivate func setupNotificationObservers() {
@@ -201,11 +211,9 @@ class SignInController: UIViewController {
         })
     }
     
-    @objc func goToSignUp() {
-        let signUpController = SignUpController()
-//        signUpController.modalPresentationStyle = .currentContext
-        signUpController.modalTransitionStyle = .flipHorizontal
-        self.present(signUpController,animated: true)
+    @objc func goToSignIn() {
+        self.dismiss(animated: true, completion: nil)
     }
     
 }
+

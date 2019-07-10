@@ -15,6 +15,7 @@ Copyright © 2019 | Serxhio Gugo
 ### App will have 3 Tabs: 
 + Movie Feed
 + Search Movie
++ Favorites
 + About Us
 
 ### Features
@@ -22,11 +23,11 @@ Copyright © 2019 | Serxhio Gugo
 + Ability to Play Trailers.
 + Information about the Actors and their details.
 + Allows you to search/query for different movies.
++ Saving movies to Watch Later Tab
 + Sharing the movies
 
 ### Future Improvements
 + Ability to display TV Shows
-+ Saving movies to Watch Later Tab
 + Push Notifications for New Movies
 
 ## Screenshots

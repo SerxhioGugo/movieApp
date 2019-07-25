@@ -10,7 +10,11 @@ import UIKit
 
 class SignInController: UIViewController {
     
+    //MARK: Objects
+    let signInViewModel = SignInViewModel()
     
+    
+    //MARK: UIProperties
     let dismissButton: UIButton = {
         let button = UIButton()
         button.setTitle("X", for: .normal)
@@ -21,7 +25,6 @@ class SignInController: UIViewController {
         return button
     }()
     
-    
     let logoIcon: UIImageView = {
         let img = UIImageView()
         img.image = #imageLiteral(resourceName: "movieIcon.png")
@@ -29,20 +32,6 @@ class SignInController: UIViewController {
         img.heightAnchor.constraint(equalToConstant: 100).isActive = true
         return img
     }()
-    
-    //    let selectPhotoButton: UIButton = {
-    //       let button = UIButton(type: .system)
-    //        button.setTitle("Select Photo", for: .normal)
-    //        button.titleLabel?.font = UIFont(name: Fonts.latoHeavy, size: 32)
-    //        button.backgroundColor = UIColor.blueDark3
-    //        button.setTitleColor(.sunnyOrange, for: .normal)
-    //        button.heightAnchor.constraint(equalToConstant: 275).isActive = true
-    //        button.layer.cornerRadius = 16
-    //        button.layer.shadowColor = UIColor.sunnyOrange.cgColor
-    //        button.layer.borderColor = UIColor.sunnyOrange.cgColor
-    //        button.layer.borderWidth = 2
-    //        return button
-    //    }()
     
     let emailTextField: UITextField = {
         let tf = CustomTextField(padding: 16)
@@ -53,6 +42,7 @@ class SignInController: UIViewController {
         tf.backgroundColor = .myGrayColor
         tf.keyboardType = .emailAddress
         tf.keyboardAppearance = UIKeyboardAppearance.dark
+        tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return tf
     }()
     
@@ -65,16 +55,20 @@ class SignInController: UIViewController {
         tf.backgroundColor = .myGrayColor
         tf.isSecureTextEntry = true
         tf.keyboardAppearance = UIKeyboardAppearance.dark
+        tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return tf
     }()
+    
+    
     
     let signInButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Sign in", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .sunnyOrange
+        button.setTitleColor(.lightGray, for: .normal)
+        button.backgroundColor = .myGrayColor
         button.layer.cornerRadius = 20
         button.titleLabel?.font = UIFont(name: Fonts.latoBold, size: 24)
+        button.isEnabled = false
         button.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return button
     }()
@@ -115,6 +109,7 @@ class SignInController: UIViewController {
         setupLayout()
         setupNotificationObservers()
         setupTapGesture()
+        setupSingInViewModelObserver()
     }
     
     lazy var stackView = UIStackView(arrangedSubviews: [
@@ -130,20 +125,21 @@ class SignInController: UIViewController {
     //MARK: Layout
     fileprivate func setupLayout() {
         
-
         view.addSubview(stackView)
         stackView.axis = .vertical
         stackView.spacing = 8
-        stackView.anchor(top: nil, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 32, bottom: 0, right: 32))
+        stackView.anchor(top: nil,
+                         leading: view.leadingAnchor,
+                         bottom: nil, trailing: view.trailingAnchor,
+                         padding: .init(top: 0, left: 32, bottom: 0, right: 32))
         stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
-        
         view.addSubview(dismissButton)
-        dismissButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil, bottom: nil, trailing: view.safeAreaLayoutGuide.trailingAnchor,padding: .init(top: 0, left: 0, bottom: 0, right: 32), size: .init(width: 34, height: 34))
-        
-        //        view.addSubview(logoIcon)
-        //        logoIcon.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: stackView.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 32, bottom: 32, right: 32), size: .init(width: 0, height: 100))
-
+        dismissButton.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                             leading: nil, bottom: nil,
+                             trailing: view.safeAreaLayoutGuide.trailingAnchor,
+                             padding: .init(top: 0, left: 0, bottom: 0, right: 32),
+                             size: .init(width: 34, height: 34))
         
         let bottomSectionStack = UIStackView(arrangedSubviews: [
             termsButton,
@@ -154,27 +150,43 @@ class SignInController: UIViewController {
         bottomSectionStack.axis = .horizontal
         
         view.addSubview(bottomSectionStack)
-        bottomSectionStack.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, size: .init(width: 0, height: 80))
+        bottomSectionStack.anchor(top: nil,
+                                  leading: view.leadingAnchor,
+                                  bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                                  trailing: view.trailingAnchor,
+                                  size: .init(width: 0, height: 80))
+    }
+    
+    //MARK: Actions
+    
+    @objc fileprivate func handleTextChange(textField: UITextField) {
+        if textField == emailTextField {
+            signInViewModel.email = textField.text
+        } else if textField == passwordTextField  {
+            signInViewModel.password = textField.text
+        }
+    }
+    
+    fileprivate func setupSingInViewModelObserver() {
+        signInViewModel.isFormValidObserver = { [unowned self] isFormValid in
+            self.signInButton.isEnabled = isFormValid
+            if isFormValid {
+                self.signInButton.backgroundColor = .sunnyOrange
+                self.signInButton.setTitleColor(.white, for: .normal)
+            } else {
+                self.signInButton.backgroundColor = .myGrayColor
+                self.signInButton.setTitleColor(.lightGray, for: .normal)
+            }
+        }
+    }
+    
+    @objc func handleDissmiss() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     fileprivate func setupNotificationObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    //Handling retain cycle/removing observers
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    fileprivate func setupTapGesture() {
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapDismiss)))
-    }
-    
-    //MARK: Actions
-    @objc func handleDissmiss() {
-        self.dismiss(animated: true, completion: nil)
     }
     
     @objc fileprivate func handleKeyboardShow(notification: Notification) {
@@ -186,6 +198,15 @@ class SignInController: UIViewController {
         
         let difference = keyboardFrame.height - bottomSpace
         self.view.transform = CGAffineTransform(translationX: 0, y: -difference - 18)
+    }
+    //Handling retain cycle/removing observers
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    fileprivate func setupTapGesture() {
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapDismiss)))
     }
     
     @objc fileprivate func handleKeyboardHide() {
@@ -203,7 +224,7 @@ class SignInController: UIViewController {
     
     @objc func goToSignUp() {
         let signUpController = SignUpController()
-//        signUpController.modalPresentationStyle = .currentContext
+        //signUpController.modalPresentationStyle = .currentContext
         signUpController.modalTransitionStyle = .flipHorizontal
         self.present(signUpController,animated: true)
     }

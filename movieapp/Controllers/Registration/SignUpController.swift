@@ -10,6 +10,9 @@ import UIKit
 
 class SignUpController: UIViewController {
     
+    //MARK: Objects
+    let signUpViewModel = SignUpViewModel()
+    
     let dismissButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("X", for: .normal)
@@ -55,30 +58,7 @@ class SignUpController: UIViewController {
         return tf
     }()
     
-    @objc fileprivate func handleTextChange(textField: UITextField) {
-        if textField == nameTextField {
-            print("full name changing")
-        } else if textField == emailTextField {
-            print("email changing")
-        } else if textField == passwordTextField  {
-            print("password changing")
-        }
-        
-        let isFormValid = nameTextField.text?.isEmpty == false &&
-            emailTextField.text?.isEmpty == false &&
-            passwordTextField.text?.isEmpty == false
-        
-        signUpButton.isEnabled = isFormValid
-        
-        if isFormValid {
-            signUpButton.backgroundColor = .sunnyOrange
-            signUpButton.setTitleColor(.white, for: .normal)
-        } else {
-            signUpButton.backgroundColor = .myGrayColor
-            signUpButton.setTitleColor(.lightGray, for: .normal)
-        }
-        
-    }
+
     
     let emailTextField: UITextField = {
         let tf = CustomTextField(padding: 16)
@@ -127,15 +107,14 @@ class SignUpController: UIViewController {
         button.addTarget(self, action: #selector(goToSignIn), for: .touchUpInside)
         return button
     }()
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .blueDark3
         setupLayout()
         setupNotificationObservers()
         setupTapGesture()
+        setupSignUpViewModelObserver()
     }
     
     lazy var stackView = UIStackView(arrangedSubviews: [
@@ -162,9 +141,38 @@ class SignUpController: UIViewController {
         
         view.addSubview(dismissButton)
         dismissButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil, bottom: nil, trailing: view.safeAreaLayoutGuide.trailingAnchor,padding: .init(top: 0, left: 0, bottom: 0, right: 32), size: .init(width: 34, height: 34))
-        
-        //        view.addSubview(logoIcon)
-        //        logoIcon.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: stackView.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 32, bottom: 32, right: 32), size: .init(width: 0, height: 100))
+    }
+    
+    //MARK: Actions
+    
+    @objc fileprivate func handleTextChange(textField: UITextField) {
+        if textField == nameTextField {
+            self.signUpViewModel.name = textField.text
+        } else if textField == emailTextField {
+            self.signUpViewModel.email = textField.text
+        } else if textField == passwordTextField  {
+            signUpViewModel.password = textField.text
+        }
+    }
+    
+    fileprivate func setupSignUpViewModelObserver() {
+        signUpViewModel.isFormValidObserver = { [unowned self] isFormValid in
+            print("Form is changing, is it valid?", isFormValid)
+            
+            self.signUpButton.isEnabled = isFormValid
+            
+            if isFormValid {
+                self.signUpButton.backgroundColor = .sunnyOrange
+                self.signUpButton.setTitleColor(.white, for: .normal)
+            } else {
+                self.signUpButton.backgroundColor = .myGrayColor
+                self.signUpButton.setTitleColor(.lightGray, for: .normal)
+            }
+        }
+    }
+    
+    @objc func handleDissmiss() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     fileprivate func setupNotificationObservers() {
@@ -180,11 +188,6 @@ class SignUpController: UIViewController {
     
     fileprivate func setupTapGesture() {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapDismiss)))
-    }
-    
-    //MARK: Actions
-    @objc func handleDissmiss() {
-        self.dismiss(animated: true, completion: nil)
     }
     
     @objc fileprivate func handleKeyboardShow(notification: Notification) {

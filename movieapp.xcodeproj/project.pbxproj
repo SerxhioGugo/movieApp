@@ -14,6 +14,8 @@
 		62466BF1226156C000B7A816 /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62466BF0226156C000B7A816 /* VideoCell.swift */; };
 		62466BF3226158DB00B7A816 /* TrailerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62466BF2226158DB00B7A816 /* TrailerController.swift */; };
 		62466BF522615A7C00B7A816 /* TrailerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62466BF422615A7C00B7A816 /* TrailerCell.swift */; };
+		624D3CEF22EA0CA900B7C681 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624D3CEE22EA0CA900B7C681 /* SignUpViewModel.swift */; };
+		624D3CF122EA110D00B7C681 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624D3CF022EA110D00B7C681 /* SignInViewModel.swift */; };
 		625CEF52228B41E600022D77 /* GenreContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625CEF51228B41E600022D77 /* GenreContainerCell.swift */; };
 		625CEF54228B49A200022D77 /* FadeAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625CEF53228B49A200022D77 /* FadeAnimation.swift */; };
 		625CEF57228B4F6600022D77 /* NowPlayingCellContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625CEF56228B4F6600022D77 /* NowPlayingCellContainer.swift */; };
@@ -78,6 +80,8 @@
 		62466BF0226156C000B7A816 /* VideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
 		62466BF2226158DB00B7A816 /* TrailerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerController.swift; sourceTree = "<group>"; };
 		62466BF422615A7C00B7A816 /* TrailerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerCell.swift; sourceTree = "<group>"; };
+		624D3CEE22EA0CA900B7C681 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		624D3CF022EA110D00B7C681 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		625CEF51228B41E600022D77 /* GenreContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreContainerCell.swift; sourceTree = "<group>"; };
 		625CEF53228B49A200022D77 /* FadeAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeAnimation.swift; sourceTree = "<group>"; };
 		625CEF56228B4F6600022D77 /* NowPlayingCellContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingCellContainer.swift; sourceTree = "<group>"; };
@@ -148,6 +152,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		624D3CED22EA0A7C00B7C681 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				624D3CEE22EA0CA900B7C681 /* SignUpViewModel.swift */,
+				624D3CF022EA110D00B7C681 /* SignInViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		625CEF50228B41CA00022D77 /* GenreCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -209,6 +222,7 @@
 				62974A0822361B6E0007D346 /* Model */,
 				62974A0D22362B000007D346 /* View */,
 				629749FA22360F6E0007D346 /* Controllers */,
+				624D3CED22EA0A7C00B7C681 /* ViewModels */,
 				629749DE22360CD90007D346 /* ViewController.swift */,
 				629749E322360CDB0007D346 /* Assets.xcassets */,
 				629749E522360CDB0007D346 /* LaunchScreen.storyboard */,
@@ -513,8 +527,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				62466BF3226158DB00B7A816 /* TrailerController.swift in Sources */,
+				624D3CEF22EA0CA900B7C681 /* SignUpViewModel.swift in Sources */,
 				62D44AED2239E54F004DD6CC /* HomeCell.swift in Sources */,
 				62E2BECA2251B300000DF8B9 /* MovieDetailController.swift in Sources */,
+				624D3CF122EA110D00B7C681 /* SignInViewModel.swift in Sources */,
 				625CEF52228B41E600022D77 /* GenreContainerCell.swift in Sources */,
 				620BE9F522B72C7A000D147D /* MovieGenreCell.swift in Sources */,
 				6224D3572295BD6600BB2618 /* UPCarouselFlowLayout.swift in Sources */,

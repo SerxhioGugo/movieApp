@@ -10,15 +10,14 @@ import Foundation
 
 class SignInViewModel {
     
+    var bindableIsFormValid = Bindable<Bool>()
+    
     var email: String? { didSet {checkFormValidity()} }
     var password: String? { didSet{checkFormValidity()} }
     
     fileprivate func checkFormValidity() {
         let isFormValid = email?.isEmpty == false
                        && password?.isEmpty == false
-        isFormValidObserver?(isFormValid)
-    }
-    
-    var isFormValidObserver: ((Bool) -> Void)?
-    
+        bindableIsFormValid.value = isFormValid
+    }    
 }

@@ -28,6 +28,7 @@
 		627374362257027300F3B123 /* Lato-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 627374302257027300F3B123 /* Lato-Medium.ttf */; };
 		627374372257027300F3B123 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 627374312257027300F3B123 /* Lato-Light.ttf */; };
 		627374382257027300F3B123 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 627374322257027300F3B123 /* Lato-Thin.ttf */; };
+		62871BAD22EBC97B00CC4DCA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 62871BAC22EBC97B00CC4DCA /* GoogleService-Info.plist */; };
 		629749DD22360CD90007D346 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629749DC22360CD90007D346 /* AppDelegate.swift */; };
 		629749DF22360CD90007D346 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629749DE22360CD90007D346 /* ViewController.swift */; };
 		629749E422360CDB0007D346 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 629749E322360CDB0007D346 /* Assets.xcassets */; };
@@ -59,6 +60,7 @@
 		62C03922227AA894004700C6 /* GenreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62C03921227AA894004700C6 /* GenreCell.swift */; };
 		62C371042252BA5D00071256 /* VerticalStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62C371032252BA5D00071256 /* VerticalStackView.swift */; };
 		62C7D14C22D048A10083413D /* SignInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62C7D14B22D048A10083413D /* SignInController.swift */; };
+		62C9DA3322EA3CA300C4B2BC /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62C9DA3222EA3CA300C4B2BC /* Bindable.swift */; };
 		62D44AED2239E54F004DD6CC /* HomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D44AEC2239E54F004DD6CC /* HomeCell.swift */; };
 		62E2BEC622514999000DF8B9 /* UINavItemExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E2BEC522514999000DF8B9 /* UINavItemExtension.swift */; };
 		62E2BECA2251B300000DF8B9 /* MovieDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E2BEC92251B300000DF8B9 /* MovieDetailController.swift */; };
@@ -94,6 +96,7 @@
 		627374302257027300F3B123 /* Lato-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Medium.ttf"; sourceTree = "<group>"; };
 		627374312257027300F3B123 /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
 		627374322257027300F3B123 /* Lato-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Thin.ttf"; sourceTree = "<group>"; };
+		62871BAC22EBC97B00CC4DCA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		629749D922360CD90007D346 /* movieapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = movieapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		629749DC22360CD90007D346 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		629749DE22360CD90007D346 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -127,6 +130,7 @@
 		62C03921227AA894004700C6 /* GenreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreCell.swift; sourceTree = "<group>"; };
 		62C371032252BA5D00071256 /* VerticalStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalStackView.swift; sourceTree = "<group>"; };
 		62C7D14B22D048A10083413D /* SignInController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInController.swift; sourceTree = "<group>"; };
+		62C9DA3222EA3CA300C4B2BC /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		62D44AEC2239E54F004DD6CC /* HomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCell.swift; sourceTree = "<group>"; };
 		62E2BEC522514999000DF8B9 /* UINavItemExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavItemExtension.swift; sourceTree = "<group>"; };
 		62E2BEC92251B300000DF8B9 /* MovieDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailController.swift; sourceTree = "<group>"; };
@@ -227,6 +231,7 @@
 				629749E322360CDB0007D346 /* Assets.xcassets */,
 				629749E522360CDB0007D346 /* LaunchScreen.storyboard */,
 				629749E822360CDB0007D346 /* Info.plist */,
+				62871BAC22EBC97B00CC4DCA /* GoogleService-Info.plist */,
 			);
 			path = movieapp;
 			sourceTree = "<group>";
@@ -256,6 +261,7 @@
 				625CEF53228B49A200022D77 /* FadeAnimation.swift */,
 				6224D3562295BD6600BB2618 /* UPCarouselFlowLayout.swift */,
 				629EFC1022D17F1F00E9E097 /* CustomTextField.swift */,
+				62C9DA3222EA3CA300C4B2BC /* Bindable.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -476,6 +482,7 @@
 				629749E722360CDB0007D346 /* LaunchScreen.storyboard in Resources */,
 				6273742C225701F700F3B123 /* Lato-Bold.ttf in Resources */,
 				627374362257027300F3B123 /* Lato-Medium.ttf in Resources */,
+				62871BAD22EBC97B00CC4DCA /* GoogleService-Info.plist in Resources */,
 				629749E422360CDB0007D346 /* Assets.xcassets in Resources */,
 				627374372257027300F3B123 /* Lato-Light.ttf in Resources */,
 			);
@@ -578,6 +585,7 @@
 				62C7D14C22D048A10083413D /* SignInController.swift in Sources */,
 				62974A0A22361B990007D346 /* Search.swift in Sources */,
 				62F1C6C7225ECD41005CA1A3 /* CastCell.swift in Sources */,
+				62C9DA3322EA3CA300C4B2BC /* Bindable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

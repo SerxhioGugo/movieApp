@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import JGProgressHUD
 
 class SignUpController: UIViewController {
     
@@ -43,6 +45,10 @@ class SignUpController: UIViewController {
         button.layer.shadowColor = UIColor.sunnyOrange.cgColor
         button.layer.borderColor = UIColor.sunnyOrange.cgColor
         button.layer.borderWidth = 2
+        button.clipsToBounds = true
+        button.imageView?.contentMode = .scaleAspectFill
+        
+        button.addTarget(self, action: #selector(handleSelectPhoto), for: .touchUpInside)
         return button
     }()
     
@@ -58,7 +64,7 @@ class SignUpController: UIViewController {
         return tf
     }()
     
-
+    
     
     let emailTextField: UITextField = {
         let tf = CustomTextField(padding: 16)
@@ -95,6 +101,7 @@ class SignUpController: UIViewController {
         button.titleLabel?.font = UIFont(name: Fonts.latoBold, size: 24)
         button.isEnabled = false
         button.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
         return button
     }()
     
@@ -107,7 +114,7 @@ class SignUpController: UIViewController {
         button.addTarget(self, action: #selector(goToSignIn), for: .touchUpInside)
         return button
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .blueDark3
@@ -118,7 +125,6 @@ class SignUpController: UIViewController {
     }
     
     lazy var stackView = UIStackView(arrangedSubviews: [
-        //selectPhotoButton,
         logoIcon,
         selectPhotoButton,
         nameTextField,
@@ -145,6 +151,13 @@ class SignUpController: UIViewController {
     
     //MARK: Actions
     
+    @objc func handleSelectPhoto() {
+        print("Select photo pressed")
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        present(imagePickerController, animated: true)
+    }
+    
     @objc fileprivate func handleTextChange(textField: UITextField) {
         if textField == nameTextField {
             self.signUpViewModel.name = textField.text
@@ -156,17 +169,26 @@ class SignUpController: UIViewController {
     }
     
     fileprivate func setupSignUpViewModelObserver() {
-        signUpViewModel.isFormValidObserver = { [unowned self] isFormValid in
-            print("Form is changing, is it valid?", isFormValid)
+        
+        signUpViewModel.bindableIsFormValid.bind { [unowned self] isFormValid in
+            guard let isFormValid = isFormValid else { return }
             
             self.signUpButton.isEnabled = isFormValid
             
-            if isFormValid {
-                self.signUpButton.backgroundColor = .sunnyOrange
-                self.signUpButton.setTitleColor(.white, for: .normal)
+            self.signUpButton.backgroundColor = isFormValid ? .sunnyOrange : .myGrayColor
+            self.signUpButton.setTitleColor(isFormValid ? .white : .lightGray, for: .normal)
+        }
+
+        signUpViewModel.bindableImage.bind { [unowned self] image in
+            self.selectPhotoButton.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+        }
+        
+        signUpViewModel.bindableIsSigningUp.bind { [unowned self] isSigningup in
+            if isSigningup == true {
+                self.signUpHUD.textLabel.text = "Register"
+                self.signUpHUD.show(in: self.view)
             } else {
-                self.signUpButton.backgroundColor = .myGrayColor
-                self.signUpButton.setTitleColor(.lightGray, for: .normal)
+                self.signUpHUD.dismiss(animated: true)
             }
         }
     }
@@ -184,6 +206,11 @@ class SignUpController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNotificationObservers()
     }
     
     fileprivate func setupTapGesture() {
@@ -214,9 +241,45 @@ class SignUpController: UIViewController {
         })
     }
     
+    fileprivate func showHUDWithError(error: Error) {
+        signUpHUD.dismiss(animated: true)
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Failed Registration"
+        hud.detailTextLabel.text = error.localizedDescription
+        hud.show(in: self.view)
+        hud.dismiss(afterDelay: 3)
+    }
+    
+    let signUpHUD = JGProgressHUD(style: .dark)
+    
     @objc func goToSignIn() {
         self.dismiss(animated: true, completion: nil)
     }
     
+    //Handle register
+    @objc fileprivate func handleSignUp() {
+        self.handleTapDismiss()
+        signUpViewModel.performSignUp { [weak self] err in
+            if let err = err {
+                self?.showHUDWithError(error: err)
+                return
+            }
+            print("Finished registering user")
+        }
+    }
 }
 
+extension SignUpController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = info[.originalImage] as? UIImage
+//        signUpViewModel.image = image
+        signUpViewModel.bindableImage.value = image
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
+    }
+    
+}

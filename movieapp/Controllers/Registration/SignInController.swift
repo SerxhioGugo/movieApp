@@ -100,9 +100,7 @@ class SignInController: UIViewController {
         button.titleLabel?.adjustsFontSizeToFitWidth = true
         return button
     }()
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .blueDark3
@@ -113,15 +111,13 @@ class SignInController: UIViewController {
     }
     
     lazy var stackView = UIStackView(arrangedSubviews: [
-        //selectPhotoButton,
         logoIcon,
         emailTextField,
         passwordTextField,
         signInButton,
         signUpButton
         ])
-    
-    
+
     //MARK: Layout
     fileprivate func setupLayout() {
         
@@ -168,15 +164,13 @@ class SignInController: UIViewController {
     }
     
     fileprivate func setupSingInViewModelObserver() {
-        signInViewModel.isFormValidObserver = { [unowned self] isFormValid in
+        
+        signInViewModel.bindableIsFormValid.bind { [unowned self] isFormValid in
+            guard let isFormValid = isFormValid else { return }
             self.signInButton.isEnabled = isFormValid
-            if isFormValid {
-                self.signInButton.backgroundColor = .sunnyOrange
-                self.signInButton.setTitleColor(.white, for: .normal)
-            } else {
-                self.signInButton.backgroundColor = .myGrayColor
-                self.signInButton.setTitleColor(.lightGray, for: .normal)
-            }
+            
+            self.signInButton.backgroundColor = isFormValid ? .sunnyOrange : .myGrayColor
+            self.signInButton.setTitleColor(isFormValid ? .white : .lightGray, for: .normal)
         }
     }
     
@@ -203,6 +197,11 @@ class SignInController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNotificationObservers()
     }
     
     fileprivate func setupTapGesture() {

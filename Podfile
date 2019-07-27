@@ -11,4 +11,10 @@ pod 'CHIPageControl', '~> 0.1.3'
 pod 'Cosmos', '~> 18.0'
 pod 'PullToDismiss', '~> 2.2'
 #pod 'Hero'
+pod 'Firebase/Firestore’
+pod 'Firebase/Auth’
+pod 'Firebase/Storage’
+pod 'Firebase/Core’
+pod 'JGProgressHUD','~>2.0.3'
+
 end

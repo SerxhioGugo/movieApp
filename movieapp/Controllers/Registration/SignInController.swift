@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SignInController: UIViewController {
     
@@ -108,6 +109,13 @@ class SignInController: UIViewController {
         setupNotificationObservers()
         setupTapGesture()
         setupSingInViewModelObserver()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if Auth.auth().currentUser != nil {
+            self.dismiss(animated: true)
+        }
     }
     
     lazy var stackView = UIStackView(arrangedSubviews: [
@@ -223,9 +231,11 @@ class SignInController: UIViewController {
     
     @objc func goToSignUp() {
         let signUpController = SignUpController()
+        let nav = UINavigationController(rootViewController: signUpController)
         //signUpController.modalPresentationStyle = .currentContext
-        signUpController.modalTransitionStyle = .flipHorizontal
-        self.present(signUpController,animated: true)
+//        signUpController.modalTransitionStyle = .flipHorizontal
+//        self.present(signUpController,animated: true)
+        self.present(nav, animated: true)
     }
     
 }

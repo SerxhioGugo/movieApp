@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class FavoriteController: BaseListController {
     
@@ -38,7 +39,23 @@ class FavoriteController: BaseListController {
         
         setupUI()
         setupNavController()
-        
+        isUserLoggedIn()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("view did appear")
+        isUserLoggedIn()
+    }
+    
+    func isUserLoggedIn() {
+        if Auth.auth().currentUser != nil {
+            self.signInButton.isHidden = true
+            self.informationLabel.text = "Press ⭐️ to see movies here"
+        } else {
+            self.signInButton.isHidden = false
+            self.informationLabel.text = "To view your list of Favorites please sign in"
+        }
     }
 
     fileprivate func setupNavController() {

@@ -16,7 +16,7 @@ class SignUpController: UIViewController {
     let signUpViewModel = SignUpViewModel()
     
     let dismissButton: UIButton = {
-        let button = UIButton(type: .system)
+        let button = UIButton()
         button.setTitle("X", for: .normal)
         button.backgroundColor = UIColor.lightGray.withAlphaComponent(0.50)
         button.titleLabel?.textColor = .black
@@ -47,7 +47,6 @@ class SignUpController: UIViewController {
         button.layer.borderWidth = 2
         button.clipsToBounds = true
         button.imageView?.contentMode = .scaleAspectFill
-        
         button.addTarget(self, action: #selector(handleSelectPhoto), for: .touchUpInside)
         return button
     }()
@@ -63,9 +62,7 @@ class SignUpController: UIViewController {
         tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return tf
     }()
-    
-    
-    
+
     let emailTextField: UITextField = {
         let tf = CustomTextField(padding: 16)
         tf.tintColor = .sunnyOrange
@@ -137,7 +134,7 @@ class SignUpController: UIViewController {
     
     //MARK: Layout
     fileprivate func setupLayout() {
-        
+        self.navigationController?.isNavigationBarHidden = true
         view.addSubview(stackView)
         stackView.axis = .vertical
         stackView.spacing = 8
@@ -265,6 +262,7 @@ class SignUpController: UIViewController {
                 return
             }
             print("Finished registering user")
+            self?.dismiss(animated: true)
         }
     }
 }

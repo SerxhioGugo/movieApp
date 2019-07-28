@@ -64,7 +64,7 @@ class SignUpViewModel {
     
     fileprivate func saveInfoToFirestore(imageUrl: String, completion: @escaping (Error?) -> Void) {
         let uid = Auth.auth().currentUser?.uid ?? ""
-        let docData = ["name": name ?? "" , "uid": uid, "imageUrl": imageUrl]
+        let docData = ["name": name ?? "" , "uid": uid, "imageUrl": imageUrl, "email": email ?? ""]
         Firestore.firestore().collection("users").document(uid).setData(docData) { err in
             if let err = err {
                 completion(err)

@@ -14,6 +14,7 @@ class SignUpController: UIViewController {
     
     //MARK: Objects
     let signUpViewModel = SignUpViewModel()
+    let signUpHUD = JGProgressHUD(style: .dark)
     
     let dismissButton: UIButton = {
         let button = UIButton()
@@ -182,7 +183,7 @@ class SignUpController: UIViewController {
         
         signUpViewModel.bindableIsSigningUp.bind { [unowned self] isSigningup in
             if isSigningup == true {
-                self.signUpHUD.textLabel.text = "Register"
+                self.signUpHUD.textLabel.text = "Registering..."
                 self.signUpHUD.show(in: self.view)
             } else {
                 self.signUpHUD.dismiss(animated: true)
@@ -246,8 +247,6 @@ class SignUpController: UIViewController {
         hud.show(in: self.view)
         hud.dismiss(afterDelay: 3)
     }
-    
-    let signUpHUD = JGProgressHUD(style: .dark)
     
     @objc func goToSignIn() {
         self.dismiss(animated: true, completion: nil)

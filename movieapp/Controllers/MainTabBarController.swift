@@ -34,7 +34,7 @@ class MainTabBarController: UITabBarController {
                                                      selectedImage: #imageLiteral(resourceName: "starSelected"),
                                                      unselectedImage: #imageLiteral(resourceName: "star"))
         
-        let aboutController = createNavController(vc: ProfileController(),
+        let aboutController = createNavController(vc: SettingsController(),
                                                   title: "Profile",
                                                   selectedImage: #imageLiteral(resourceName: "aboutSelected"),
                                                   unselectedImage: #imageLiteral(resourceName: "about"))

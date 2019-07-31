@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import JGProgressHUD
 import Firebase
 
 class SignInController: UIViewController {
     
     //MARK: Objects
     let signInViewModel = SignInViewModel()
-    
+    let signInHud = JGProgressHUD(style: .dark)
     
     //MARK: UIProperties
     let dismissButton: UIButton = {
@@ -59,9 +60,7 @@ class SignInController: UIViewController {
         tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return tf
     }()
-    
-    
-    
+
     let signInButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Sign in", for: .normal)
@@ -71,6 +70,7 @@ class SignInController: UIViewController {
         button.titleLabel?.font = UIFont(name: Fonts.latoBold, size: 24)
         button.isEnabled = false
         button.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         return button
     }()
     
@@ -179,6 +179,37 @@ class SignInController: UIViewController {
             
             self.signInButton.backgroundColor = isFormValid ? .sunnyOrange : .myGrayColor
             self.signInButton.setTitleColor(isFormValid ? .white : .lightGray, for: .normal)
+        }
+        
+        signInViewModel.bindableIsSigningIn.bind { [unowned self] isSigningIn in
+            if isSigningIn == true {
+                self.signInHud.textLabel.text = "Signing in..."
+                self.signInHud.show(in: self.view)
+            } else {
+                self.signInHud.dismiss()
+            }
+        }
+    }
+    
+    fileprivate func showHUDWithError(error: Error) {
+        signInHud.dismiss(animated: true)
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Failed Registration"
+        hud.detailTextLabel.text = error.localizedDescription
+        hud.show(in: self.view)
+        hud.dismiss(afterDelay: 3)
+    }
+    
+    @objc fileprivate func handleLogin() {
+        self.handleTapDismiss()
+        signInViewModel.performLogin { [weak self] err in
+            if let err = err {
+                print("Error logging in", err)
+                self?.showHUDWithError(error: err)
+                return
+            } else {
+                self?.dismiss(animated: true)
+            }
         }
     }
     

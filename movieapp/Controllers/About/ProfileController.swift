@@ -11,11 +11,14 @@ import Firebase
 import JGProgressHUD
 import SDWebImage
 
-class ProfileController: UITableViewController {
+class SettingsController: UITableViewController {
     
     fileprivate let cellId = "cellId"
     var user: User?
-        
+    
+//    let dummyUser: [String: String] = [name: "Your Name", email: "Your email"]
+    var dummyUser: [String:String] = ["name":"Your Name", "email":"Your Email"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -23,6 +26,32 @@ class ProfileController: UITableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: .plain, target: self, action: #selector(handleLogOut))
         setupNavController()
         fetchCurrentUser()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if Auth.auth().currentUser != nil {
+            fetchCurrentUser()
+            tableView.reloadData()
+            print("tableView is reloading")
+        } else {
+            self.user = User(dictionary: dummyUser)
+            tableView.reloadData()
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        if Auth.auth().currentUser != nil {
+            fetchCurrentUser()
+            tableView.reloadData()
+            print("tableView is reloading")
+        } else {
+            self.user = User(dictionary: dummyUser)
+            tableView.reloadData()
+        }
     }
     
     fileprivate func setupNavController() {
@@ -58,10 +87,13 @@ class ProfileController: UITableViewController {
         } catch {
             print("user signed out")
         }
+        
+        let signInController = SignInController()
+        self.present(signInController, animated: true)
     }
 }
 
-extension ProfileController {
+extension SettingsController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1

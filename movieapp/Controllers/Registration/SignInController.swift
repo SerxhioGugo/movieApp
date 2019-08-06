@@ -10,11 +10,16 @@ import UIKit
 import JGProgressHUD
 import Firebase
 
+protocol DismissViewController {
+    func dismissViewController()
+}
+
 class SignInController: UIViewController {
     
     //MARK: Objects
     let signInViewModel = SignInViewModel()
     let signInHud = JGProgressHUD(style: .dark)
+    var dismissDelegate: DismissViewController?
     
     //MARK: UIProperties
     let dismissButton: UIButton = {
@@ -261,12 +266,14 @@ class SignInController: UIViewController {
     }
     
     @objc func goToSignUp() {
-        let signUpController = SignUpController()
-        let nav = UINavigationController(rootViewController: signUpController)
-        //signUpController.modalPresentationStyle = .currentContext
-//        signUpController.modalTransitionStyle = .flipHorizontal
-//        self.present(signUpController,animated: true)
-        self.present(nav, animated: true)
+//        let signUpController = SignUpController()
+//        let nav = UINavigationController(rootViewController: signUpController)
+//        //signUpController.modalPresentationStyle = .currentContext
+////        signUpController.modalTransitionStyle = .flipHorizontal
+////        self.present(signUpController,animated: true)
+//        self.present(nav, animated: true)
+        self.dismiss(animated: true, completion: nil)
+        self.dismissDelegate?.dismissViewController()
     }
     
 }

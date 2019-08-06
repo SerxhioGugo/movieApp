@@ -15,17 +15,17 @@ class SettingsController: UITableViewController {
     
     fileprivate let cellId = "cellId"
     var user: User?
-    
-//    let dummyUser: [String: String] = [name: "Your Name", email: "Your email"]
+    let testCellId = "testCellId"
     var dummyUser: [String:String] = ["name":"Your Name", "email":"Your Email"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        tableView.register(UserInfoCell.self, forCellReuseIdentifier: cellId)
+//        tableView.register(UserInfoCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: testCellId)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: .plain, target: self, action: #selector(handleLogOut))
         setupNavController()
         fetchCurrentUser()
+        configureTableView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -63,6 +63,12 @@ class SettingsController: UITableViewController {
         navigationController?.navigationBar.titleTextAttributes = attributes
     }
     
+    fileprivate func configureTableView() {
+        tableView.rowHeight = 60
+        tableView.frame = view.frame
+        tableView.tableFooterView = UIView()
+    }
+    
     //MARK: Actions
     fileprivate func fetchCurrentUser() {
         //Pulling current user
@@ -95,20 +101,81 @@ class SettingsController: UITableViewController {
 
 extension SettingsController {
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return SettingsSections.allCases.count
     }
     
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        guard let section = SettingsSections(rawValue: section) else { return 0 }
+        
+        switch section {
+        case .Social: return SocialOptions.allCases.count
+        case .AboutUs : return AboutUs.allCases.count
+        }
+    }
+    
+//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserInfoCell
+//        cell.emailProfile.text = user?.email
+//        cell.nameProfile.text = user?.name
+//        cell.imageProfile.sd_setImage(with: URL(string: user?.imageUrl ?? "") )
+//        return cell
+//    }
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserInfoCell
-        cell.emailProfile.text = user?.email
-        cell.nameProfile.text = user?.name
-        cell.imageProfile.sd_setImage(with: URL(string: user?.imageUrl ?? "") )
+        let cell = tableView.dequeueReusableCell(withIdentifier: testCellId, for: indexPath)
+//        cell.backgroundColor = .blueDark3
+        guard let section = SettingsSections(rawValue: indexPath.section) else { return UITableViewCell() }
+        
+        switch section {
+        case .Social:
+             let social = SocialOptions(rawValue: indexPath.row)
+            cell.textLabel?.text = social?.description
+        case .AboutUs :
+            let aboutUs = AboutUs(rawValue: indexPath.row)
+            cell.textLabel?.text = aboutUs?.description
+        }
+        
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let section = SettingsSections(rawValue: indexPath.section) else { return}
+        
+        switch section {
+        case .Social:
+            let social = SocialOptions(rawValue: indexPath.row)
+            if social == .EditProfile {
+                let yellowVC = UIViewController()
+                yellowVC.view.backgroundColor = .yellow
+                self.present(yellowVC, animated: true)
+            } else {
+                print("whatever")
+            }
+
+        case .AboutUs :
+            let aboutUs = AboutUs(rawValue: indexPath.row)
+            //add event on tap here
+        }
     }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = .blueDark3
+        
+        let title = UILabel()
+        title.font = UIFont(name: Fonts.latoHeavy, size: 20)
+        title.textColor = .sunnyOrange
+        title.text = SettingsSections(rawValue: section)?.description
+        view.addSubview(title)
+        title.fillSuperview(padding: .init(top: 0, left: 16, bottom: 0, right: 0))
+        return view
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
+    
 }
 

@@ -79,14 +79,6 @@ class MovieDetailCell: UICollectionViewCell {
         return img
     }()
     
-    let playTrailerButton: UIButton = {
-        let button = UIButton()
-        button.setBackgroundImage(#imageLiteral(resourceName: "fancyPlayButton"), for: .normal)
-        button.isUserInteractionEnabled = true
-        button.addTarget(self, action: #selector(handlePlayTrailer), for: .touchUpInside)
-        return button
-    }()
-    
     let movieTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .sunnyOrange
@@ -145,9 +137,6 @@ class MovieDetailCell: UICollectionViewCell {
         addSubview(wallpaperImage)
         wallpaperImage.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, size: .init(width: 0, height: 300))
         
-        wallpaperImage.addSubview(playTrailerButton)
-        playTrailerButton.centerInSuperview(size: .init(width: 35, height: 35))
-        
         addSubview(posterImage)
         
         NSLayoutConstraint.activate([
@@ -174,10 +163,6 @@ class MovieDetailCell: UICollectionViewCell {
         addSubview(topStackView)
         topStackView.anchor(top: wallpaperImage.bottomAnchor, leading: posterImage.trailingAnchor, bottom: overviewStackView.topAnchor, trailing: trailingAnchor, padding: .init(top: 5, left: 20, bottom: 0, right: 5))
         
-    }
-    
-    @objc func handlePlayTrailer() {
-        print("playyyyyy")
     }
     
     required init?(coder aDecoder: NSCoder) {

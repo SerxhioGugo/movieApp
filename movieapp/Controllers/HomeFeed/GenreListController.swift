@@ -31,7 +31,6 @@ class GenreListController: BaseListController {
 
 extension GenreListController: UICollectionViewDelegateFlowLayout {
     
-    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return movie?.genres.count ?? 0
     }
@@ -50,7 +49,6 @@ extension GenreListController: UICollectionViewDelegateFlowLayout {
         genreController.modalPresentationStyle = .overFullScreen
         genreController.modalTransitionStyle = .crossDissolve
         self.present(genreController, animated: true)
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

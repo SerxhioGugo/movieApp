@@ -9,7 +9,12 @@
 import UIKit
 import Firebase
 
-class FavoriteController: BaseListController {
+class FavoriteController: BaseListController, DismissViewController {
+    func dismissViewController() {
+        let signUpController = SignUpController()
+        self.present(signUpController, animated: true)
+    }
+    
     
     let informationLabel: UILabel = {
         let label = UILabel()
@@ -73,6 +78,7 @@ class FavoriteController: BaseListController {
     
     @objc func handleShowSignInPage() {
         let signInController = SignInController()
+        signInController.dismissDelegate = self
         self.present(signInController, animated: true)
     }
     

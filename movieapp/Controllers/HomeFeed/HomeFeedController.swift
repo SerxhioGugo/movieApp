@@ -268,8 +268,6 @@ extension HomeFeedController: UICollectionViewDelegateFlowLayout {
         default:
             print("none")
         }
-        
-
     }
 }
 
@@ -280,7 +278,6 @@ extension HomeFeedController: UITabBarControllerDelegate {
             self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
             
         } else {
-            
             didComeFromAnotherViewController = false
         }
         

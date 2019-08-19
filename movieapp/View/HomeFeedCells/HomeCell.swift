@@ -8,6 +8,7 @@
 
 import UIKit
 import SDWebImage
+import SkeletonView
 
 class HomeCell: UICollectionViewCell {
     
@@ -27,6 +28,7 @@ class HomeCell: UICollectionViewCell {
         image.contentMode = .scaleAspectFill
         image.layer.masksToBounds = true
 //        image.layer.cornerRadius = 6
+        image.isSkeletonable = true
         return image
     }()
     

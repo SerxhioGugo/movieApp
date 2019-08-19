@@ -26,7 +26,6 @@ class GenreListController: BaseListController {
             layout.scrollDirection = .horizontal
         }
     }
-    
 }
 
 extension GenreListController: UICollectionViewDelegateFlowLayout {

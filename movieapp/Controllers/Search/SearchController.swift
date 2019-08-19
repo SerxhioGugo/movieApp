@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchController: BaseListController, UISearchBarDelegate {
+class SearchController: BaseListController, UISearchBarDelegate, UISearchControllerDelegate {
     
     fileprivate let cellId = "cellId"
     fileprivate let searchController = UISearchController(searchResultsController: nil)
@@ -25,7 +25,7 @@ class SearchController: BaseListController, UISearchBarDelegate {
         label.backgroundColor = .blueDark3
         return label
     }()
-    
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,6 +37,7 @@ class SearchController: BaseListController, UISearchBarDelegate {
         
         setupSearchBar()
         setupNavController()
+        fetchTrending()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -47,7 +48,17 @@ class SearchController: BaseListController, UISearchBarDelegate {
         super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()
     }
-    
+    //Mark: fix searchbar
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        searchController.isActive = true
+        searchController.becomeFirstResponder()
+    }
+
+//    func didPresentSearchController(_ searchController: UISearchController) {
+//        searchController.searchBar.becomeFirstResponder()
+//    }
+//
     fileprivate func setupNavController() {
         navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.barTintColor = UIColor.blueDark3
@@ -64,12 +75,28 @@ class SearchController: BaseListController, UISearchBarDelegate {
         searchController.searchBar.backgroundColor = .clear
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
+        searchController.delegate = self
         searchController.searchBar.placeholder = "Search movies..."
         searchController.searchBar.isTranslucent = false
         searchController.searchBar.barStyle = .blackTranslucent
         searchController.searchBar.keyboardAppearance = .dark
         searchController.searchBar.tintColor = .sunnyOrange
         
+    }
+    
+    func fetchTrending() {
+        
+        guard let url = Service.requests(.getNowPlaying) else { return }
+        Service.fetchJSON(url: url) { (request: Search?, error) in
+            if let error = error {
+                print("Error fetching data: ", error)
+            }
+            guard let request = request?.results else { return }
+            self.searchResult = request
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -93,13 +120,6 @@ class SearchController: BaseListController, UISearchBarDelegate {
     deinit {
         timer?.invalidate()
     }
-//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-//        DispatchQueue.main.async {
-//            self.searchResult.removeAll()
-//            self.collectionView.reloadData()
-//        }
-//
-//    }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         timer?.invalidate()
@@ -163,4 +183,5 @@ extension SearchController: UICollectionViewDelegateFlowLayout {
         present(movieDetailController, animated: true)
         
     }
+
 }

@@ -13,7 +13,7 @@ extension UITabBarController {
         let navController = UINavigationController(rootViewController: vc)
         
         vc.navigationItem.title = title
-        vc.view.backgroundColor = .white
+        vc.view.backgroundColor = .blueDark3
         
         navController.tabBarItem.image = unselectedImage
         navController.tabBarItem.selectedImage = selectedImage

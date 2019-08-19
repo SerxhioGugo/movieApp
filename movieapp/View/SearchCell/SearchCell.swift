@@ -8,11 +8,13 @@
 
 import UIKit
 import SDWebImage
+import SkeletonView
 
 class SearchCell: UICollectionViewCell {
     
     let posterImageView: UIImageView = {
        let image = UIImageView()
+        image.isSkeletonable = true
         image.layer.cornerRadius = 2
         image.clipsToBounds = true
         image.contentMode = .scaleAspectFill

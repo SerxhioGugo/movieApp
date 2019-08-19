@@ -47,18 +47,7 @@ class NowPlayingController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.delegate = self
         collectionView.dataSource = self
-        
-
-        
-//        view.addSubview(pageControl)
-//        pageControl.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 55, right: 0))
     }
-    
-//     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-//        let x = targetContentOffset.pointee.x
-//        pageControl.set(progress: Int(x / view.frame.width), animated: true)
-//    }
-    
 }
 
 extension NowPlayingController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {

@@ -16,5 +16,6 @@ pod 'Firebase/Auth’
 pod 'Firebase/Storage’
 pod 'Firebase/Core’
 pod 'JGProgressHUD','~>2.0.3'
+pod 'SkeletonView'
 
 end

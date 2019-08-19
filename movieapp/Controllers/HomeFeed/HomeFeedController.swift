@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class HomeFeedController: BaseListController {
     
     fileprivate let cellId = "cellId"
@@ -39,7 +38,6 @@ class HomeFeedController: BaseListController {
         setupLayout()
         setupCollectionView()
         fetchData()
-        
     }
     
     

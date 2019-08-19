@@ -69,7 +69,7 @@ class FavoriteController: BaseListController, DismissViewController {
         navigationController?.navigationBar.barTintColor = UIColor.blueDark3
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationBar.isTranslucent = true
-        navigationItem.title = "Sign in"
+        navigationItem.title = "My list"
 
         let attributes = [NSAttributedString.Key.foregroundColor : UIColor.sunnyOrange]
         navigationController?.navigationBar.largeTitleTextAttributes = attributes
@@ -81,7 +81,6 @@ class FavoriteController: BaseListController, DismissViewController {
         signInController.dismissDelegate = self
         self.present(signInController, animated: true)
     }
-    
     
     fileprivate func setupUI() {
         view.addSubview(informationLabel)
